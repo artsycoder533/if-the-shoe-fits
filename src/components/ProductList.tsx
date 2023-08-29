@@ -21,10 +21,10 @@ const ProductList = (props: any): JSX.Element => {
   // console.log('product images =>', product.images)
   // console.log('product inside Product List===>', product)
   const { title, id, images, variants, handle, availableForSale, description } =
-    product;
+    product || {};
   const { price } = variants[0];
-  const { amount } = price;
-  if (images.length === 0) return;
+  const { amount } = price || {};
+  // if (images?.length === 0) return;
 
   const { src, altText } = product?.images[0];
 
