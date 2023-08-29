@@ -19,7 +19,7 @@ export default async function Home() {
   const response = await shopifyClient.checkout.create();
   const checkout = parseShopifyResponse(response);
   const checkoutID = response.id;
-  console.log("checkout ==>", checkout);
+  // console.log("checkout ==>", checkout);
   //get all productcs
   const res = await shopifyClient.product.fetchAll();
   const products = parseShopifyResponse(res);
