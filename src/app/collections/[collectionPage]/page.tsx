@@ -11,23 +11,22 @@ const CollectionPage = async ({
   params: { collectionPage: string };
 }) => {
   const res = shopifyClient.collection.fetchAllWithProducts();
+  console.log("res===>", res);
   const collections = parseShopifyResponse(res);
-  // console.log('collections===>', collections)
+  const collectionsFull = collections.data;
+  console.log("collections===>", collectionsFull);
   // const collection = collections.find(collection => collection.handle === params.collectionPage);
-  const collection = collections.find(
-    (collection) => collection.handle === params.collectionPage
-  );
+  // const collection = collections.find(
+  //   (collection: any) => collection.handle === params.collectionPage
+  // );
 
-  const products = collection.products;
+  // const products = collection.products;
   // const products = PRODUCTS.filter(product => product.collection === params.collectionPage)
   return (
-    <div>
-      <Navigation />
-      <div>
-        <BreadCrumbs title={params.collectionPage} />
-        <ProductsList products={products} />
-      </div>
-    </div>
+    <section>
+      <BreadCrumbs title={params.collectionPage} />
+      {/* <ProductsList products={products} /> */}
+    </section>
   );
 };
 
