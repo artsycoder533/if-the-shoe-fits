@@ -16,9 +16,9 @@ export const revalidate = 15;
 
 export default async function Home() {
   //create checkout
-  const response = await shopifyClient.checkout.create();
-  const checkout = parseShopifyResponse(response);
-  const checkoutID = response.id;
+  // const response = await shopifyClient.checkout.create();
+  // const checkout = parseShopifyResponse(response);
+  // const checkoutID = response.id;
   // console.log("checkout ==>", checkout);
   //get all productcs
   const res = await shopifyClient.product.fetchAll();
