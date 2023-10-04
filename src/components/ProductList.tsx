@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
@@ -10,9 +9,12 @@ interface ProductListProps {
 }
 
 const ProductList = ({ product }: ProductListProps): JSX.Element | null => {
+  // console.log("product in ProductList===", product);
   const router = useRouter();
 
-  const { title, images, variants, handle } = product || {};
+  const { title, images, variants, handle, availableForSale, featuredImage } =
+    product || {};
+  const { url, altText } = featuredImage || {};
   const { price } = variants[0];
   const { amount } = price || {};
 
@@ -28,8 +30,8 @@ const ProductList = ({ product }: ProductListProps): JSX.Element | null => {
           key={images[0]?.id}
           className="cursor-pointer object-cover rounded-lg"
           priority
-          src={images[0]?.src}
-          alt={images[0]?.altText}
+          src={url}
+          alt={altText || title}
           width={250}
           height={250}
           // fill
@@ -38,6 +40,9 @@ const ProductList = ({ product }: ProductListProps): JSX.Element | null => {
       <div className="h-24 py-2 text-left">
         <p className="text-sm font-medium">{title}</p>
         <p className="text-xs py-2">{`$${amount}`}</p>
+        {!availableForSale ? (
+          <p className="text-red-500">Out of Stock</p>
+        ) : null}
       </div>
     </div>
   );

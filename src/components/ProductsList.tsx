@@ -6,11 +6,11 @@ interface ProductListProps {
   products: Product[];
 }
 
-const ProductsList = ({ products }: ProductListProps): JSX.Element => {
+const ProductsList = ({ products }: ProductListProps) => {
   return (
     <section className="flex flex-row justify-center flex-wrap gap-8 mt-10">
       {products && products.length > 0 ? (
-        products.map((product) => (
+        products.map((product: Product) => (
           <ProductList key={product.handle} product={product} />
         ))
       ) : (

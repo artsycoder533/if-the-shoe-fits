@@ -14,6 +14,14 @@ export type Product = {
   options: [];
   images: ShopifyImage[];
   variants: Variants[];
+  featuredImage: FeaturedImage;
+  isGiftCard: boolean;
+  tags: string[];
+  priceRange: {
+    minVariantPrice: {
+      amount: string;
+    };
+  };
   // hasNextPage: {
   //   value: boolean;
   // };
@@ -53,14 +61,19 @@ export type Variants = {
 
 export type ShopifyImage = {
   id: string;
-  src: string;
+  url: string;
   altText: string;
   width: number;
   height: number;
-  // type: {};
   hasNextPage: boolean;
   hasPreviousPage: boolean;
   variableValues: {
     first: number;
   };
+};
+
+export type FeaturedImage = {
+  // id: string;
+  url: string;
+  altText: string;
 };

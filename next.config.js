@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {};
 
 module.exports = {
-    images: {
-      domains: ['external-content.duckduckgo.com', 'cdn.shopify.com'],
-    },
-  }
+  images: {
+    domains: ["external-content.duckduckgo.com", "cdn.shopify.com"],
+  },
+  experimental: {
+    serverActions: true,
+  },
+};
