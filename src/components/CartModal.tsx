@@ -4,39 +4,46 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaRegWindowClose, FaShoppingCart } from "react-icons/fa";
-import { Checkout } from "shopify-buy";
+import { Checkout, Cart } from "shopify-buy";
+import { formatPrice } from "@/app/utils/helpers";
 
 interface CartModalProps {
-  cart: Checkout | undefined;
+  cart: Cart | undefined;
 }
 
 const CartModal = ({ cart }: CartModalProps) => {
   const [toggleCart, setToggleCart] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(0);
 
+  // console.log("cart==>", cart);
+
   useEffect(() => {
     if (!cart) return;
-    if (cart.lineItems.length < 1) return;
+    if (cart?.lines?.length < 1) return;
     // console.log("cart updated!");
-    const quanity = cart.lineItems.reduce((acc, currentItem) => {
+    const quanity = cart?.lines.edges?.reduce((acc, currentItem) => {
       return acc + currentItem.quantity;
     }, 0);
     setQuantity(quanity);
   }, [quantity, cart]);
 
   if (!cart) return;
-  const { id, webUrl, totalTax, subtotalPrice, lineItems, currencyCode } = cart;
-  const { amount: totalTaxAmount } = totalTax;
-  const { amount: subTotal } = subtotalPrice;
+  console.log("cart==>", cart);
+  const { id, checkoutUrl, lines, totalQuantity, cost } = cart || {};
+  const { subtotalAmount, totalTaxAmount } = cost || {};
+  const { amount, currencyCode } = subtotalAmount || {};
 
-  const formatPrice = (amount: string) => {
-    const price = new Intl.NumberFormat(undefined, {
-      style: "currency",
-      currency: currencyCode,
-      currencyDisplay: "narrowSymbol",
-    }).format(parseFloat(amount));
-    return price;
-  };
+  // console.log(amount, subtotalAmount);
+
+  // const formatPrice = (amount: string, currencyCode: string) => {
+  //   if (!amount || !currencyCode) return;
+  //   const price = new Intl.NumberFormat(undefined, {
+  //     style: "currency",
+  //     currency: currencyCode,
+  //     currencyDisplay: "narrowSymbol",
+  //   }).format(parseFloat(amount));
+  //   return price;
+  // };
 
   // console.log("cart==>", cart);
   return (
@@ -46,9 +53,9 @@ const CartModal = ({ cart }: CartModalProps) => {
         onClick={() => setToggleCart(true)}
       >
         <FaShoppingCart />
-        {quantity > 0 ? (
+        {totalQuantity > 0 ? (
           <span className="absolute top-0 right-0 -mt-1 bg- text-red-500">
-            {quantity}
+            {totalQuantity}
           </span>
         ) : null}
       </div>
@@ -66,22 +73,50 @@ const CartModal = ({ cart }: CartModalProps) => {
         </div>
 
         <div className="flex flex-col">
-          {lineItems?.map((lineItem) => {
-            const { title, quantity, variant } = lineItem;
+          {lines.edges?.map((node) => {
+            console.log("node===>", node);
 
-            const { image } = variant || {};
+            const { quantity, merchandise } = node.node || {};
+            const {
+              id: merchandiseId,
+              price,
+              selectedOptions,
+              title: variantTitle,
+              image,
+              product,
+            } = merchandise || {};
+            const { title: productTitle } = product || {};
+            const { amount } = price || {};
+            const { name, value } = selectedOptions[0];
+
+            // const { image } = variant || {};
             const { url, altText } = image || {};
-
+            console.log(amount, variantTitle, url, altText);
             // console.log("images ==>", image);
 
             return (
-              <div key={lineItem.id}>
-                <p>
-                  {title} x {quantity}
-                </p>
+              <div key={merchandiseId} className="border flex">
                 {altText && url ? (
-                  <Image alt={altText || `image of ${title}`} src={url} />
+                  <Image
+                    alt={altText || `image of ${variantTitle}`}
+                    src={url}
+                    width={75}
+                    height={75}
+                  />
                 ) : null}
+                <div>
+                  <p>{productTitle}</p>
+                  {/* <p>{value}</p> */}
+                  <p>
+                    {variantTitle} x {quantity}
+                  </p>
+                  <p>
+                    {`${formatPrice(
+                      String(amount),
+                      currencyCode
+                    )} ${currencyCode}`}
+                  </p>
+                </div>
               </div>
             );
           })}
@@ -89,19 +124,26 @@ const CartModal = ({ cart }: CartModalProps) => {
         <div>
           <div className="flex justify-between items-cente">
             <p>Taxes</p>
-            <p>{`${formatPrice(String(totalTaxAmount))} ${currencyCode}`}</p>
+            <p>Calculated at checkout</p>
+            {/* <p>{`${formatPrice(
+              String(totalTaxAmount),
+              currencyCode
+            )} ${currencyCode}`}</p> */}
           </div>
           <div className="flex justify-between items-center">
             <p>Shipping</p>
-            <p>Calculated at checkout</p>
+            <p>Calculated at Checkout</p>
           </div>
           <div className="flex justify-between items-center">
             <p>Total</p>
-            <p>{`${formatPrice(String(subTotal))} ${currencyCode}`}</p>
+            <p>{`${formatPrice(
+              String(amount),
+              currencyCode
+            )} ${currencyCode}`}</p>
           </div>
 
           <Link
-            href={String(webUrl)}
+            href={String(checkoutUrl)}
             className="rounded-lg py-3 px-2 border mt-4 block text-center bg-blue-600 text-white"
           >
             Proceed to Checkout

@@ -1,8 +1,8 @@
 import BreadCrumbs from "@/components/BreadCrumbs";
-
 import { storefront } from "../../../../lib/shopify";
 import ProductCard from "@/components/ProductCard";
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 // import { createCart, addToCart } from "../../../../lib/shopifyActions";
 
 type Props = {};
@@ -12,7 +12,6 @@ export const revalidate = 15;
 const ProductPage = async ({ params }: { params: { handle: string } }) => {
   if (!params.handle) return;
   const { handle } = params;
-  console.log("handle ==>", handle);
   const gql = String.raw;
 
   const productQuery = gql`
@@ -43,8 +42,14 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
                       name
                       value
                     }
+                    id
+                    name
                   }
                 }
+              }
+              options {
+                name
+                values
               }
             }
           }
@@ -57,6 +62,7 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
         priceRange {
           minVariantPrice {
             amount
+            currencyCode
           }
         }
         tags
@@ -107,38 +113,68 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
             }
           }
         }
+        totalInventory
       }
     }
   `;
 
   const createCartQuery = gql`
-    mutation {
-      checkoutCreate(input: {}) {
-        checkout {
+    mutation CreateCcart {
+      cartCreate {
+        cart {
           id
+          checkoutUrl
         }
       }
     }
   `;
 
   const addItemToCartMutation = gql`
-    mutation AddToCart(
-      $checkoutId: ID!
-      $lineItems: [CheckoutLineItemInput!]!
-    ) {
-      checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
-        checkout {
+    mutation AddToCart($cartId: ID!, $lines: [CartLineInput!]!) {
+      cartLinesAdd(cartId: $cartId, lines: $lines) {
+        cart {
+          cost {
+            subtotalAmount {
+              amount
+              currencyCode
+            }
+          }
+          checkoutUrl
           id
-          lineItems(first: 10) {
+          lines(first: 10) {
             edges {
               node {
-                title
                 quantity
-                variant {
-                  title
-                  image {
-                    url
-                    altText
+                id
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                    availableForSale
+                    selectedOptions {
+                      name
+                      value
+                    }
+                    title
+                    image {
+                      altText
+                      url
+                    }
+                    price {
+                      amount
+                      currencyCode
+                    }
+                  }
+                }
+                sellingPlanAllocation {
+                  sellingPlan {
+                    recurringDeliveries
+                    name
+                    id
+                    description
+                    options {
+                      name
+                      value
+                    }
                   }
                 }
               }
@@ -150,33 +186,33 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
   `;
 
   const { product } = await storefront(productQuery, { handle });
-
-  console.log("product inside product handle ===>", product);
+  if (!product) return;
 
   const handleAddToCart = async (quantity: number, variantID: string) => {
     "use server";
+    if (!quantity || !variantID) return;
     let cartId = cookies().get("cartId")?.value;
 
     if (!cartId) {
-      const { checkoutCreate } = await storefront(createCartQuery);
-      const { checkout } = checkoutCreate;
-      const { id: cartId } = checkout;
-
-      cookies().set("cartId", cartId);
+      const { cartCreate } = await storefront(createCartQuery);
+      const { cart } = cartCreate;
+      const { id } = cart;
+      cartId = id;
+      cookies().set("cartId", id);
     }
 
-    if (!cartId) return;
-    const lineItems = [{ variantId: variantID, quantity: 1 }];
-    const { checkoutLineItemsToAdd } = await storefront(addItemToCartMutation, {
+    const lines = [{ merchandiseId: variantID, quantity }];
+    const result = await storefront(addItemToCartMutation, {
       cartId,
-      lineItems,
+      lines,
     });
-    // addToCart(variantID, cartId);
+
+    revalidatePath(`/products/${handle}`);
   };
 
   return (
     <div>
-      <BreadCrumbs title={product.title} />
+      <BreadCrumbs title={product?.title} />
       <ProductCard product={product} addToCart={handleAddToCart} />
     </div>
   );

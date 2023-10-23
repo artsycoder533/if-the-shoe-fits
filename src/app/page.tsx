@@ -1,6 +1,4 @@
 import ProductsList from "@/components/ProductsList";
-// import { shopifyClient, parseShopifyResponse } from "../../lib/shopify";
-import { cookies } from "next/headers";
 import { createCart, getCart } from "../../lib/shopifyActions";
 import { storefront } from "../../lib/shopify";
 import { Suspense } from "react";
@@ -27,7 +25,6 @@ export default async function Home() {
           node {
             title
             handle
-            description
             id
             featuredImage {
               id
@@ -70,31 +67,18 @@ export default async function Home() {
 
   const { products } = await storefront(productsQuery);
 
-  const filteredProducts = products.edges.map((edge) => {
+  const filteredProducts = products.edges.map((edge: { node: any }) => {
     const node = edge.node;
     return {
       ...node,
-      images: node.images.edges.map((imageEdge) => imageEdge.node),
-      variants: node.variants.edges.map((variantEdge) => variantEdge.node),
+      images: node.images.edges.map(
+        (imageEdge: { node: any }) => imageEdge.node
+      ),
+      variants: node.variants.edges.map(
+        (variantEdge: { node: any }) => variantEdge.node
+      ),
     };
   });
-
-  // console.log("products ===>", filteredProducts);
-
-  //fetch all products
-  // const res = await shopifyClient.product.fetchAll();
-  // const products = parseShopifyResponse(res);
-
-  // //create a checkout
-  // const cartId = cookies().get("cartID")?.value;
-  // let cart;
-  // if (cartId) {
-  //   cart = await getCart(cartId);
-  // }
-
-  // if (!cartId) {
-  //   await createCart();
-  // }
 
   return (
     <section className="">

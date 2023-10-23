@@ -8,7 +8,7 @@ interface ProductListProps {
 
 const ProductsList = ({ products }: ProductListProps) => {
   return (
-    <section className="flex flex-row justify-center flex-wrap gap-8 mt-10">
+    <section className="grid grid-cols-4 place-items-center gap-8 mt-10 max-w-7xl mx-auto">
       {products && products.length > 0 ? (
         products.map((product: Product) => (
           <ProductList key={product.handle} product={product} />

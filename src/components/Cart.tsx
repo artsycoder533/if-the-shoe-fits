@@ -14,21 +14,17 @@ interface CartProps {
   cart: Checkout;
 }
 
-export const revalidate = 15;
+export const revalidate = 0;
 
 const Cart = async () => {
   const gql = String.raw;
 
   const getCartQuery = gql`
-    query GetCart($id: ID!) {
+    query FetchCart($id: ID!) {
       cart(id: $id) {
         checkoutUrl
         cost {
           subtotalAmount {
-            amount
-            currencyCode
-          }
-          totalAmount {
             amount
             currencyCode
           }
@@ -37,23 +33,33 @@ const Cart = async () => {
             currencyCode
           }
         }
-        id
         totalQuantity
+        id
         lines(first: 10) {
           edges {
             node {
-              id
-              quantity
-              cost {
-                totalAmount {
-                  amount
-                  currencyCode
+              merchandise {
+                ... on ProductVariant {
+                  id
+                  price {
+                    amount
+                    currencyCode
+                  }
+                  selectedOptions {
+                    name
+                    value
+                  }
+                  title
+                  image {
+                    url
+                    altText
+                  }
+                  product {
+                    title
+                  }
                 }
               }
-              attributes {
-                key
-                value
-              }
+              quantity
             }
           }
         }
@@ -61,17 +67,18 @@ const Cart = async () => {
     }
   `;
 
-  const cartId = cookies().get("cartId")?.value;
+  const id = cookies().get("cartId")?.value;
+  // console.log("in cart checkout id is ==>", id);
   // console.log("cartId form cookies ==>", cartId);
   let cart;
-
-  if (cartId) {
-    cart = await storefront(getCartQuery, { cartId });
-    // cart = await getCart(cartId);
-    // console.log("cart from cart server ==>", cart);
+  if (!id) return;
+  if (id) {
+    cart = await storefront(getCartQuery, { id });
+    // cart = await getCart(checkoutId);
+    console.log("cart from cart server ==>", cart.cart);
   }
 
-  return <CartModal cart={cart} />;
+  return <CartModal cart={cart.cart} />;
 };
 
 export default Cart;

@@ -3,20 +3,21 @@ import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Product, ShopifyImage, Variants } from "@/types/product";
+import { formatPrice } from "@/app/utils/helpers";
 
 interface ProductListProps {
   product: Product;
 }
 
 const ProductList = ({ product }: ProductListProps): JSX.Element | null => {
-  // console.log("product in ProductList===", product);
   const router = useRouter();
 
   const { title, images, variants, handle, availableForSale, featuredImage } =
     product || {};
   const { url, altText } = featuredImage || {};
   const { price } = variants[0];
-  const { amount } = price || {};
+  const { amount, currencyCode } = price || {};
+  console.log(amount);
 
   if (!images[0]) return null;
 
@@ -34,12 +35,14 @@ const ProductList = ({ product }: ProductListProps): JSX.Element | null => {
           alt={altText || title}
           width={250}
           height={250}
-          // fill
         />
       </div>
       <div className="h-24 py-2 text-left">
         <p className="text-sm font-medium">{title}</p>
-        <p className="text-xs py-2">{`$${amount}`}</p>
+        <p className="text-xs py-2">{`${formatPrice(
+          String(amount),
+          currencyCode
+        )}`}</p>
         {!availableForSale ? (
           <p className="text-red-500">Out of Stock</p>
         ) : null}

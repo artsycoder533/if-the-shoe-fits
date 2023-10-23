@@ -12,14 +12,14 @@ interface ProductCardProps {
 const ProductCard = ({ product, addToCart }: ProductCardProps) => {
   const [activeVariantId, setActiveVariantId] = useState<string>("");
   const [activeColor, setActiveColor] = useState<string>("");
-  const [quantity, setQuantity] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(1);
 
-  console.log("product variants ==>", product.variants);
+  // console.log("product inproduct card ==>", product);
 
   useEffect(() => {
-    console.log("inside use effect top");
+    // console.log("inside use effect top");
     if (product.variants.edges && product.variants.edges.length > 0) {
-      console.log("inside use effect");
+      // console.log("inside use effect");
       if (product.variants.edges[0].node.availableForSale) {
         setActiveColor(product.variants.edges[0].node.title);
         setActiveVariantId(product.variants.edges[0].node.id);
@@ -49,7 +49,7 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
   const imageNodes = product.images.edges.map((edge) => edge.node);
   const variantNodes = product.variants.edges.map((edge) => edge.node);
 
-  console.log("variantsNodes =", variantNodes);
+  // console.log("variantsNodes =", variantNodes);
   // console.log("variants =>", variants);
 
   // const filteredImages = images.edges.map;
@@ -58,7 +58,15 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
   // const { price, id: variantID } = variants[0];
   // const { amount } = price;
 
-  console.log("active color ==>", activeColor);
+  // console.log("active color ==>", activeColor);
+
+  // console.log(
+  //   "in product cart ==>",
+  //   "quantity ==>",
+  //   quantity,
+  //   "variant id ==>",
+  //   activeVariantId
+  // );
 
   return (
     <div className="flex flex-row justify-center gap-8 mt-10">
@@ -128,7 +136,6 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
                 onClick={() => {
                   setActiveVariantId(variantId);
                   setActiveColor(title);
-                  setQuantity((prev) => prev + 1);
                 }}
               >
                 <Image
