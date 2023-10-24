@@ -1,8 +1,26 @@
 "use client";
 
-import { Product, ShopifyImage } from "@/types/product";
+import {
+  Product,
+  ShopifyImage,
+  Variants,
+  Edge,
+  Variant,
+} from "@/types/product";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+
+type SelectedOption = {
+  name: string;
+  value: string;
+};
+
+type VariantNode = {
+  selectedOptions: SelectedOption[];
+  // Add other properties as needed
+};
+
+// Then, specify the types for your variables
 
 interface ProductCardProps {
   product: Product;
@@ -14,12 +32,8 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
   const [activeColor, setActiveColor] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
 
-  // console.log("product inproduct card ==>", product);
-
   useEffect(() => {
-    // console.log("inside use effect top");
     if (product.variants.edges && product.variants.edges.length > 0) {
-      // console.log("inside use effect");
       if (product.variants.edges[0].node.availableForSale) {
         setActiveColor(product.variants.edges[0].node.title);
         setActiveVariantId(product.variants.edges[0].node.id);
@@ -29,7 +43,6 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
 
   if (!product) return;
 
-  // console.log("prodict", product);
   const {
     id,
     title,
@@ -46,27 +59,12 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
     featuredImage || {};
   const { minVariantPrice } = priceRange;
   const { amount } = minVariantPrice;
-  const imageNodes = product.images.edges.map((edge) => edge.node);
-  const variantNodes = product.variants.edges.map((edge) => edge.node);
 
-  // console.log("variantsNodes =", variantNodes);
-  // console.log("variants =>", variants);
+  // console.log("product images", product.images);
+  const imageNodes = product.images[0]?.edges.map((edge) => edge.node);
+  const variantNodes = product.variants?.edges.map((edge) => edge.node);
 
-  // const filteredImages = images.edges.map;
-  // if (!images || images.length === 0) return;
-  // const { src, altText } = images[0];
-  // const { price, id: variantID } = variants[0];
-  // const { amount } = price;
-
-  // console.log("active color ==>", activeColor);
-
-  // console.log(
-  //   "in product cart ==>",
-  //   "quantity ==>",
-  //   quantity,
-  //   "variant id ==>",
-  //   activeVariantId
-  // );
+  console.log("variant nodes ==>", variantNodes[0]);
 
   return (
     <div className="flex flex-row justify-center gap-8 mt-10">
@@ -119,7 +117,7 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
         <p className="text-2xl">{`$${amount}`}</p>
         {/* variants */}
         <h3>
-          {variantNodes[0].selectedOptions[0].name}: {activeColor}
+          {variantNodes[0]?.selectedOptions[0]?.name || "N/A"}: {activeColor}
         </h3>
         <div className="flex flex-row items-center gap-4">
           {variantNodes?.map((variant) => {

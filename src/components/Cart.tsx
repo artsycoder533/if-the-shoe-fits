@@ -7,7 +7,6 @@ import { Checkout, URL } from "shopify-buy";
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import CartModal from "./CartModal";
-import { getCart } from "../../lib/shopifyActions";
 import { storefront } from "../../lib/shopify";
 
 interface CartProps {

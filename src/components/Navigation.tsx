@@ -2,8 +2,6 @@ import React, { Suspense, useState } from "react";
 import Link from "next/link";
 import { FaShoppingCart } from "react-icons/fa";
 import Cart from "./Cart";
-// import { parseShopifyResponse, shopifyClient } from "../../lib/shopify";
-import { Checkout } from "shopify-buy";
 
 interface NavigationProps {
   // cart: Checkout;

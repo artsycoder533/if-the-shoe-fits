@@ -1,49 +1,9 @@
-export type Product = {
-  id: string;
-  availableForSale: boolean;
-  // createdAt: string;
-  // updatedAt: string;
-  // descriptionHtml: "";
-  description: string;
-  handle: string;
-  // productType: string;
-  title: string;
-  // vendor: string;
-  // publishedAt: Date;
-  // onlineStoreUrl: string | null;
-  options: [];
-  images: ShopifyImage[];
-  variants: Variants[];
-  featuredImage: FeaturedImage;
-  isGiftCard: boolean;
-  tags: string[];
-  priceRange: {
-    minVariantPrice: {
-      amount: string;
-    };
-  };
-  // hasNextPage: {
-  //   value: boolean;
-  // };
-  // hasPreviousPage: {
-  //   value: boolean;
-  // };
-  // variableValues: {
-  //   first: number;
-  // };
+type SelectedOption = {
+  name: string;
+  value: string;
 };
 
-// type Product = {
-//   id: string;
-//   availableForSale: boolean;
-//   description: string;
-//   handle: string;
-//   title: string;
-//   variants: any[];
-//   images: any[];
-// };
-
-export type Variants = {
+export type Variant = {
   id: string;
   title: string;
   price: {
@@ -54,10 +14,43 @@ export type Variants = {
   weight: number;
   available: boolean;
   image: ShopifyImage;
-  selectedOPtions: [];
+  selectedOptions: SelectedOption[];
   hasNextPage: true;
   hasPreviousPage: true;
+  availableForSale: boolean;
+  // Add other properties specific to the Variant if needed
 };
+
+export type Edge<T> = {
+  node: T;
+};
+
+export type Product = {
+  id: string;
+  availableForSale: boolean;
+  description: string;
+  handle: string;
+  title: string;
+  options: [];
+  images: {
+    edges: {
+      node: ShopifyImage;
+    }[];
+  }[];
+  variants: {
+    edges: Edge<Variant>[]; // Include the 'edges' property
+  };
+  featuredImage: FeaturedImage;
+  isGiftCard: boolean;
+  tags: string[];
+  priceRange: {
+    minVariantPrice: {
+      amount: string;
+    };
+  };
+};
+
+export type Variants = Edge<Variant>[];
 
 export type ShopifyImage = {
   id: string;

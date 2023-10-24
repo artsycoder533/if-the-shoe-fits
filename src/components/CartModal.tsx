@@ -4,8 +4,53 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaRegWindowClose, FaShoppingCart } from "react-icons/fa";
-import { Checkout, Cart } from "shopify-buy";
-import { formatPrice } from "@/app/utils/helpers";
+
+// Define TypeScript types
+type ProductVariant = {
+  id: string;
+  price: {
+    amount: number;
+    currencyCode: string;
+  };
+  selectedOptions: {
+    name: string;
+    value: string;
+  }[];
+  title: string;
+  image: {
+    url: string;
+    altText: string;
+  };
+  product: {
+    title: string;
+  };
+};
+
+type CartLine = {
+  merchandise: ProductVariant;
+  quantity: number;
+};
+
+type Cart = {
+  checkoutUrl: string;
+  cost: {
+    subtotalAmount: {
+      amount: number;
+      currencyCode: string;
+    };
+    totalTaxAmount: {
+      amount: number;
+      currencyCode: string;
+    };
+  };
+  totalQuantity: number;
+  id: string;
+  lines: {
+    edges: {
+      node: CartLine;
+    }[];
+  };
+};
 
 interface CartModalProps {
   cart: Cart | undefined;
@@ -13,39 +58,39 @@ interface CartModalProps {
 
 const CartModal = ({ cart }: CartModalProps) => {
   const [toggleCart, setToggleCart] = useState<boolean>(false);
-  const [quantity, setQuantity] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number | null>(null);
 
   // console.log("cart==>", cart);
 
   useEffect(() => {
     if (!cart) return;
-    if (cart?.lines?.length < 1) return;
+    if (!cart.lines || cart.lines.edges.length < 1) return;
     // console.log("cart updated!");
     const quanity = cart?.lines.edges?.reduce((acc, currentItem) => {
-      return acc + currentItem.quantity;
+      return acc + currentItem.node.quantity;
     }, 0);
     setQuantity(quanity);
   }, [quantity, cart]);
 
   if (!cart) return;
-  console.log("cart==>", cart);
+  // console.log("cart==>", cart);
   const { id, checkoutUrl, lines, totalQuantity, cost } = cart || {};
   const { subtotalAmount, totalTaxAmount } = cost || {};
   const { amount, currencyCode } = subtotalAmount || {};
 
   // console.log(amount, subtotalAmount);
 
-  // const formatPrice = (amount: string, currencyCode: string) => {
-  //   if (!amount || !currencyCode) return;
-  //   const price = new Intl.NumberFormat(undefined, {
-  //     style: "currency",
-  //     currency: currencyCode,
-  //     currencyDisplay: "narrowSymbol",
-  //   }).format(parseFloat(amount));
-  //   return price;
-  // };
+  const formatPrice = (amount: string, currencyCode: string) => {
+    if (!amount || !currencyCode) return;
+    const price = new Intl.NumberFormat(undefined, {
+      style: "currency",
+      currency: currencyCode,
+      currencyDisplay: "narrowSymbol",
+    }).format(parseFloat(amount));
+    return price;
+  };
 
-  // console.log("cart==>", cart);
+  // console.log("lines==>", lines);
   return (
     <>
       <div
@@ -74,7 +119,7 @@ const CartModal = ({ cart }: CartModalProps) => {
 
         <div className="flex flex-col">
           {lines.edges?.map((node) => {
-            console.log("node===>", node);
+            // console.log("node===>", node);
 
             const { quantity, merchandise } = node.node || {};
             const {
@@ -91,7 +136,7 @@ const CartModal = ({ cart }: CartModalProps) => {
 
             // const { image } = variant || {};
             const { url, altText } = image || {};
-            console.log(amount, variantTitle, url, altText);
+            // console.log(amount, variantTitle, url, altText);
             // console.log("images ==>", image);
 
             return (

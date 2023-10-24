@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { Product, ShopifyImage, Variants } from "@/types/product";
+import { Product } from "@/types/product";
 import { formatPrice } from "@/app/utils/helpers";
 
 interface ProductListProps {
@@ -12,12 +12,14 @@ interface ProductListProps {
 const ProductList = ({ product }: ProductListProps): JSX.Element | null => {
   const router = useRouter();
 
-  const { title, images, variants, handle, availableForSale, featuredImage } =
+  const { title, images, handle, availableForSale, featuredImage, id } =
     product || {};
+
   const { url, altText } = featuredImage || {};
-  const { price } = variants[0];
+  const variants = product.variants.edges.map((edge) => edge.node);
+  const firstVariant = variants[0];
+  const price = firstVariant?.price;
   const { amount, currencyCode } = price || {};
-  console.log(amount);
 
   if (!images[0]) return null;
 
@@ -28,7 +30,7 @@ const ProductList = ({ product }: ProductListProps): JSX.Element | null => {
         onClick={() => router.push(`/products/${handle}`)}
       >
         <Image
-          key={images[0]?.id}
+          key={id}
           className="cursor-pointer object-cover rounded-lg"
           priority
           src={url}
