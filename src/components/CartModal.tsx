@@ -136,6 +136,7 @@ const CartModal = ({ cart }: CartModalProps) => {
 
             // const { image } = variant || {};
             const { url, altText } = image || {};
+            console.log("url ==>", url);
             // console.log(amount, variantTitle, url, altText);
             // console.log("images ==>", image);
 

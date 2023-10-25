@@ -187,8 +187,6 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
   const { product } = await storefront(productQuery, { handle });
   if (!product) return;
 
-  console.log("produt ===>", product.images);
-
   const handleAddToCart = async (quantity: number, variantID: string) => {
     "use server";
     if (!quantity || !variantID) return;

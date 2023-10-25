@@ -2,15 +2,6 @@ import ProductsList from "@/components/ProductsList";
 import { storefront } from "../../lib/shopify";
 import { Suspense } from "react";
 
-// type Product = {
-//   id: string;
-//   availableForSale: boolean;
-//   description: string;
-//   handle: string;
-//   title: string;
-//   variants: any[];
-//   images: any[];
-// };
 export const revalidate = 15;
 
 export default async function Home() {

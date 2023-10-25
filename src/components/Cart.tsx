@@ -74,7 +74,7 @@ const Cart = async () => {
   if (id) {
     cart = await storefront(getCartQuery, { id });
     // cart = await getCart(checkoutId);
-    console.log("cart from cart server ==>", cart.cart);
+    // console.log("cart from cart server ==>", cart.cart);
   }
 
   return <CartModal cart={cart.cart} />;

@@ -2,8 +2,41 @@
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { Product } from "@/types/product";
 import { formatPrice } from "@/app/utils/helpers";
+
+type Product = {
+  id: string;
+  availableForSale: boolean;
+  description: string;
+  handle: string;
+  title: string;
+  options: [];
+  images: ShopifyImage[];
+  variants: Variant[];
+  featuredImage: FeaturedImage;
+};
+
+type Variant = {
+  id: string;
+  title: string;
+  price: {
+    amount: string;
+    currencyCode: string;
+    type: [];
+  };
+  availableForSale: boolean;
+};
+
+type ShopifyImage = {
+  altText: string;
+  url: string;
+  id: string;
+};
+
+type FeaturedImage = {
+  url: string;
+  altText: string;
+};
 
 interface ProductListProps {
   product: Product;
@@ -11,15 +44,19 @@ interface ProductListProps {
 
 const ProductList = ({ product }: ProductListProps): JSX.Element | null => {
   const router = useRouter();
-
-  const { title, images, handle, availableForSale, featuredImage, id } =
-    product || {};
-
+  if (!product) return null;
+  const {
+    title,
+    images,
+    handle,
+    availableForSale,
+    featuredImage,
+    id,
+    variants,
+  } = product || {};
   const { url, altText } = featuredImage || {};
-  const variants = product.variants.edges.map((edge) => edge.node);
-  const firstVariant = variants[0];
-  const price = firstVariant?.price;
-  const { amount, currencyCode } = price || {};
+  const { price } = variants[0];
+  const { amount, currencyCode } = price;
 
   if (!images[0]) return null;
 

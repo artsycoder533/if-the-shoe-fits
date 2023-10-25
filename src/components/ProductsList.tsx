@@ -1,6 +1,39 @@
 import React from "react";
 import ProductList from "./ProductList";
-import { Product } from "@/types/product";
+
+type Product = {
+  id: string;
+  availableForSale: boolean;
+  description: string;
+  handle: string;
+  title: string;
+  options: [];
+  images: ShopifyImage[];
+  variants: Variant[];
+  featuredImage: FeaturedImage;
+};
+
+type Variant = {
+  id: string;
+  title: string;
+  price: {
+    amount: string;
+    currencyCode: string;
+    type: [];
+  };
+  availableForSale: boolean;
+};
+
+type ShopifyImage = {
+  altText: string;
+  url: string;
+  id: string;
+};
+
+type FeaturedImage = {
+  url: string;
+  altText: string;
+};
 
 interface ProductListProps {
   products: Product[];
@@ -10,7 +43,7 @@ const ProductsList = ({ products }: ProductListProps) => {
   return (
     <section className="grid grid-cols-4 place-items-center gap-8 mt-10 max-w-7xl mx-auto">
       {products && products.length > 0 ? (
-        products.map((product: Product) => (
+        products?.map((product: Product) => (
           <ProductList key={product.handle} product={product} />
         ))
       ) : (

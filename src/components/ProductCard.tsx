@@ -64,7 +64,7 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
   const imageNodes = product.images[0]?.edges.map((edge) => edge.node);
   const variantNodes = product.variants?.edges.map((edge) => edge.node);
 
-  console.log("variant nodes ==>", variantNodes[0]);
+  // console.log("variant nodes ==>", variantNodes[0]);
 
   return (
     <div className="flex flex-row justify-center gap-8 mt-10">
