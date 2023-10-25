@@ -22,9 +22,9 @@ const Navigation = async () => {
             <Link href="/collections/women">Women</Link>
           </li>
           <li>
-            <Suspense fallback={<FaShoppingCart />}>
-              <Cart />
-            </Suspense>
+            {/* <Suspense fallback={<FaShoppingCart />}> */}
+            <Cart />
+            {/* </Suspense> */}
           </li>
         </ul>
       </nav>
