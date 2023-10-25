@@ -72,7 +72,7 @@ const CartModal = ({ cart }: CartModalProps) => {
     setQuantity(quanity);
   }, [quantity, cart]);
 
-  if (!cart) return;
+  if (!cart) return <FaShoppingCart />;
   // console.log("cart==>", cart);
   const { id, checkoutUrl, lines, totalQuantity, cost } = cart || {};
   const { subtotalAmount, totalTaxAmount } = cost || {};
@@ -98,7 +98,7 @@ const CartModal = ({ cart }: CartModalProps) => {
         onClick={() => setToggleCart(true)}
       >
         <FaShoppingCart />
-        {totalQuantity > 0 ? (
+        {totalQuantity && totalQuantity > 0 ? (
           <span className="absolute top-0 right-0 -mt-1 bg- text-red-500">
             {totalQuantity}
           </span>
@@ -118,63 +118,64 @@ const CartModal = ({ cart }: CartModalProps) => {
         </div>
 
         <div className="flex flex-col">
-          {lines.edges?.map((node) => {
-            // console.log("node===>", node);
+          {lines &&
+            lines.edges?.map((node) => {
+              // console.log("node===>", node);
 
-            const { quantity, merchandise } = node.node || {};
-            const {
-              id: merchandiseId,
-              price,
-              selectedOptions,
-              title: variantTitle,
-              image,
-              product,
-            } = merchandise || {};
-            const { title: productTitle } = product || {};
-            const { amount } = price || {};
-            const { name, value } = selectedOptions[0];
+              const { quantity, merchandise } = node.node || {};
+              const {
+                id: merchandiseId,
+                price,
+                selectedOptions,
+                title: variantTitle,
+                image,
+                product,
+              } = merchandise || {};
+              const { title: productTitle } = product || {};
+              const { amount } = price || {};
+              const { name, value } = selectedOptions[0];
 
-            // const { image } = variant || {};
-            const { url, altText } = image || {};
-            console.log("url ==>", url);
-            // console.log(amount, variantTitle, url, altText);
-            // console.log("images ==>", image);
+              // const { image } = variant || {};
+              const { url, altText } = image || {};
+              console.log("url ==>", url);
+              // console.log(amount, variantTitle, url, altText);
+              // console.log("images ==>", image);
 
-            return (
-              <div key={merchandiseId} className="border flex">
-                {altText && url ? (
-                  <Image
-                    alt={altText || `image of ${variantTitle}`}
-                    src={url}
-                    width={75}
-                    height={75}
-                  />
-                ) : null}
-                <div>
-                  <p>{productTitle}</p>
-                  {/* <p>{value}</p> */}
-                  <p>
-                    {variantTitle} x {quantity}
-                  </p>
-                  <p>
-                    {`${formatPrice(
-                      String(amount),
-                      currencyCode
-                    )} ${currencyCode}`}
-                  </p>
+              return (
+                <div key={merchandiseId} className="border flex">
+                  {altText && url ? (
+                    <Image
+                      alt={altText || `image of ${variantTitle}`}
+                      src={url}
+                      width={75}
+                      height={75}
+                    />
+                  ) : null}
+                  <div>
+                    <p>{productTitle}</p>
+                    {/* <p>{value}</p> */}
+                    <p>
+                      {variantTitle} x {quantity}
+                    </p>
+                    <p>
+                      {`${formatPrice(
+                        String(amount),
+                        currencyCode
+                      )} ${currencyCode}`}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
         <div>
           <div className="flex justify-between items-cente">
             <p>Taxes</p>
             <p>Calculated at checkout</p>
-            {/* <p>{`${formatPrice(
+            <p>{`${formatPrice(
               String(totalTaxAmount),
               currencyCode
-            )} ${currencyCode}`}</p> */}
+            )} ${currencyCode}`}</p>
           </div>
           <div className="flex justify-between items-center">
             <p>Shipping</p>
