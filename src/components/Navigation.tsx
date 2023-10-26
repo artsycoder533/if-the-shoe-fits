@@ -33,9 +33,8 @@ const Navigation = async () => {
             <Link href="/contact">Contact</Link>
           </li>
         </ul>
-        <Suspense fallback={<FaShoppingCart />}>
-          <Cart />
-        </Suspense>
+
+        <Cart />
       </nav>
     </header>
   );

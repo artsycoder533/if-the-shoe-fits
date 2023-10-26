@@ -54,11 +54,14 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
     isGiftCard,
     tags,
     priceRange,
+    availableForSale,
   } = product;
   const { url: featuredImageURL, altText: featuredImageAltText } =
     featuredImage || {};
   const { minVariantPrice } = priceRange;
   const { amount } = minVariantPrice;
+
+  console.log(availableForSale);
 
   // console.log("product images", product.images);
   const imageNodes = product.images[0]?.edges.map((edge) => edge.node);
@@ -152,8 +155,14 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
           })}
         </div>
         <button
-          disabled={activeColor === "" || activeVariantId === ""}
-          className="px-4 py-3 bg-black cursor-pointer my-5 text-white rounded-md w-full text-xl font-semibold"
+          disabled={
+            activeColor === "" || activeVariantId === "" || !availableForSale
+          }
+          className={`px-4 py-3  cursor-pointer my-5 text-white rounded-md w-full text-xl font-semibold ${
+            activeColor === "" || activeVariantId === "" || !availableForSale
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-black"
+          }`}
           onClick={() => addToCart(quantity, activeVariantId)}
         >
           Add To Cart
