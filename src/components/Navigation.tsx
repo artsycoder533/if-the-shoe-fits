@@ -2,31 +2,40 @@ import React, { Suspense, useState } from "react";
 import Link from "next/link";
 import { FaShoppingCart } from "react-icons/fa";
 import Cart from "./Cart";
-
-interface NavigationProps {
-  // cart: Checkout;
-}
+import { storefront } from "../../lib/shopify";
 
 const Navigation = async () => {
+  const gql = String.raw;
+
+  const navItemsQuery = gql`
+    query MenuItems {
+      shop {
+        name
+      }
+    }
+  `;
+
+  const { shop } = await storefront(navItemsQuery);
+  const { name } = shop;
+
   return (
-    <header>
-      <nav className="h-14 flex items-center">
+    <header className="py-4 bg-black mx-auto text-white">
+      <nav className=" flex items-center justify-between max-w-[1400px] w-[90vw] mx-auto">
+        <h2 className="text-2xl font-bold">{name}</h2>
         <ul className="flex flex-row gap-3 items-center">
           <li>
-            <Link href="/">All Products</Link>
+            <Link href="/">Home</Link>
           </li>
           <li>
-            <Link href="/collections/men">Men</Link>
+            <Link href="/products">Products</Link>
           </li>
           <li>
-            <Link href="/collections/women">Women</Link>
-          </li>
-          <li>
-            {/* <Suspense fallback={<FaShoppingCart />}> */}
-            <Cart />
-            {/* </Suspense> */}
+            <Link href="/contact">Contact</Link>
           </li>
         </ul>
+        <Suspense fallback={<FaShoppingCart />}>
+          <Cart />
+        </Suspense>
       </nav>
     </header>
   );

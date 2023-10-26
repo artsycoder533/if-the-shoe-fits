@@ -4,8 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaRegWindowClose, FaShoppingCart } from "react-icons/fa";
+import { GrClose } from "react-icons/gr";
 
-// Define TypeScript types
 type ProductVariant = {
   id: string;
   price: {
@@ -60,12 +60,9 @@ const CartModal = ({ cart }: CartModalProps) => {
   const [toggleCart, setToggleCart] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number | null>(null);
 
-  // console.log("cart==>", cart);
-
   useEffect(() => {
     if (!cart) return;
     if (!cart.lines || cart.lines.edges.length < 1) return;
-    // console.log("cart updated!");
     const quanity = cart?.lines.edges?.reduce((acc, currentItem) => {
       return acc + currentItem.node.quantity;
     }, 0);
@@ -73,12 +70,9 @@ const CartModal = ({ cart }: CartModalProps) => {
   }, [quantity, cart]);
 
   if (!cart) return <FaShoppingCart />;
-  // console.log("cart==>", cart);
   const { id, checkoutUrl, lines, totalQuantity, cost } = cart || {};
   const { subtotalAmount, totalTaxAmount } = cost || {};
   const { amount, currencyCode } = subtotalAmount || {};
-
-  // console.log(amount, subtotalAmount);
 
   const formatPrice = (amount: string, currencyCode: string) => {
     if (!amount || !currencyCode) return;
@@ -90,7 +84,6 @@ const CartModal = ({ cart }: CartModalProps) => {
     return price;
   };
 
-  // console.log("lines==>", lines);
   return (
     <>
       <div
@@ -99,29 +92,27 @@ const CartModal = ({ cart }: CartModalProps) => {
       >
         <FaShoppingCart />
         {totalQuantity && totalQuantity > 0 ? (
-          <span className="absolute top-0 right-0 -mt-1 bg- text-red-500">
+          <span className="absolute top-0 -right-3 -mt-1 bg-red-500 text-white rounded-full h-6 w-6 flex items-center justify-center">
             {totalQuantity}
           </span>
         ) : null}
       </div>
       <aside
-        className={`absolute top-0 right-0 border w-96 h-full p-3 bg-gray-300 flex flex-col justify-between transition ${
+        className={`absolute top-0 right-0 border h-screen w-96  p-3 bg-white text-black flex flex-col justify-between transition ${
           toggleCart ? "translate-0" : "translate-x-full overflow-hidden"
         }`}
       >
         <div className="flex justify-between">
           <h2>My Cart</h2>
-          <FaRegWindowClose
+          <GrClose
             onClick={() => setToggleCart(false)}
-            className="text-xl"
+            className="text-xl pointer"
           />
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-3">
           {lines &&
             lines.edges?.map((node) => {
-              // console.log("node===>", node);
-
               const { quantity, merchandise } = node.node || {};
               const {
                 id: merchandiseId,
@@ -133,14 +124,7 @@ const CartModal = ({ cart }: CartModalProps) => {
               } = merchandise || {};
               const { title: productTitle } = product || {};
               const { amount } = price || {};
-              const { name, value } = selectedOptions[0];
-
-              // const { image } = variant || {};
               const { url, altText } = image || {};
-              console.log("url ==>", url);
-              // console.log(amount, variantTitle, url, altText);
-              // console.log("images ==>", image);
-
               return (
                 <div key={merchandiseId} className="border flex">
                   {altText && url ? (
@@ -153,7 +137,6 @@ const CartModal = ({ cart }: CartModalProps) => {
                   ) : null}
                   <div>
                     <p>{productTitle}</p>
-                    {/* <p>{value}</p> */}
                     <p>
                       {variantTitle} x {quantity}
                     </p>
@@ -172,10 +155,6 @@ const CartModal = ({ cart }: CartModalProps) => {
           <div className="flex justify-between items-cente">
             <p>Taxes</p>
             <p>Calculated at checkout</p>
-            <p>{`${formatPrice(
-              String(totalTaxAmount),
-              currencyCode
-            )} ${currencyCode}`}</p>
           </div>
           <div className="flex justify-between items-center">
             <p>Shipping</p>
@@ -191,7 +170,7 @@ const CartModal = ({ cart }: CartModalProps) => {
 
           <Link
             href={String(checkoutUrl)}
-            className="rounded-lg py-3 px-2 border mt-4 block text-center bg-blue-600 text-white"
+            className="rounded-lg py-3 px-2 border mt-4 block text-center bg-black text-white"
           >
             Proceed to Checkout
           </Link>

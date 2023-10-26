@@ -129,7 +129,7 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
               <div
                 key={variantId}
                 className={`border p-3 cursor-pointer ${
-                  activeColor === title ? "border-purple-500 border-4" : null
+                  activeColor === title ? "border-black border-2" : null
                 }`}
                 onClick={() => {
                   setActiveVariantId(variantId);
@@ -153,7 +153,7 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
         </div>
         <button
           disabled={activeColor === "" || activeVariantId === ""}
-          className="px-4 py-3 bg-purple-500 cursor-pointer my-5 text-white rounded-md w-full text-xl font-semibold"
+          className="px-4 py-3 bg-black cursor-pointer my-5 text-white rounded-md w-full text-xl font-semibold"
           onClick={() => addToCart(quantity, activeVariantId)}
         >
           Add To Cart

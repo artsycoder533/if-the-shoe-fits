@@ -164,18 +164,6 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
                     }
                   }
                 }
-                sellingPlanAllocation {
-                  sellingPlan {
-                    recurringDeliveries
-                    name
-                    id
-                    description
-                    options {
-                      name
-                      value
-                    }
-                  }
-                }
               }
             }
           }
