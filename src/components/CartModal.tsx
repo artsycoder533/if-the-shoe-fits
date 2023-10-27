@@ -103,11 +103,11 @@ const CartModal = ({ cart }: CartModalProps) => {
         ) : null}
       </button>
       <aside
-        className={`absolute top-0 right-0 border h-screen overflow-hidden w-96  p-3 bg-white text-black flex flex-col justify-between transition ${
+        className={`absolute top-0 right-0 border h-screen overflow-scroll w-96  p-3 bg-white text-black flex flex-col space-y-4 transition ${
           toggleCart ? "translate-0" : "translate-x-full overflow-hidden"
         }`}
       >
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <h2>My Cart</h2>
           <GrClose
             onClick={() => setToggleCart(false)}
@@ -115,7 +115,7 @@ const CartModal = ({ cart }: CartModalProps) => {
           />
         </div>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 flex-1">
           {lines &&
             lines.edges?.map((node) => {
               const { quantity, merchandise } = node.node || {};
@@ -131,7 +131,7 @@ const CartModal = ({ cart }: CartModalProps) => {
               const { amount } = price || {};
               const { url, altText } = image || {};
               return (
-                <div key={merchandiseId} className="border flex">
+                <div key={merchandiseId} className="border-b flex py-2">
                   {altText && url ? (
                     <Image
                       alt={altText || `image of ${variantTitle}`}
@@ -140,16 +140,13 @@ const CartModal = ({ cart }: CartModalProps) => {
                       height={75}
                     />
                   ) : null}
-                  <div>
-                    <p>{productTitle}</p>
-                    <p>
+                  <div className="w-full flex flex-col justify-between">
+                    <p className="text-sm">{productTitle}</p>
+                    <p className="text-sm">
                       {variantTitle} x {quantity}
                     </p>
-                    <p>
-                      {`${formatPrice(
-                        String(amount),
-                        currencyCode
-                      )} ${currencyCode}`}
+                    <p className="self-end font-semibold">
+                      {`${formatPrice(String(amount), currencyCode)}`}
                     </p>
                   </div>
                 </div>
