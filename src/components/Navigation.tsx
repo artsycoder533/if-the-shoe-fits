@@ -52,38 +52,34 @@ type Cart = {
 
 type NavigationProps = {
   name: string;
-  cart?: Cart;
 };
 
-const Navigation = ({ name, cart }: NavigationProps) => {
+const Navigation = ({ name }: NavigationProps) => {
   const [toggleNav, setToggleNav] = useState<boolean>(false);
-  return (
-    <header className="py-4 bg-black mx-auto text-white">
-      <nav className="flex items-center justify-between max-w-[1400px] w-[90vw] mx-auto flex-wrap md:flex-nowrap">
-        <h2 className="text-2xl font-bold">{name}</h2>
 
-        <ul
-          className={`absolute top-12 left-0 md:static md:top-auto md:z-0 bg-black z-10 flex flex-col justify-center order-last md:order-none w-full md:w-auto md:flex-row gap-3 items-center transition-all ${
-            toggleNav ? "h-96" : "h-0 hidden md:flex"
-          }`}
-        >
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/products">Products</Link>
-          </li>
-          <li>
-            <Link href="/contact">Contact</Link>
-          </li>
-        </ul>
-        {/* <Cart /> */}
-        <CartModal cart={cart} />
-        <button className="md:hidden" onClick={() => setToggleNav(!toggleNav)}>
-          X
-        </button>
-      </nav>
-    </header>
+  return (
+    <nav className="flex items-center justify-between pr-8 max-w-[1400px] w-[90vw] mx-auto flex-wrap md:flex-nowrap text-white">
+      <h2 className="text-2xl font-bold">{name}</h2>
+
+      <ul
+        className={`absolute top-12 left-0 md:static md:top-auto md:z-0 bg-black z-10 flex flex-col justify-center order-last md:order-none w-full md:w-auto md:flex-row gap-3 items-center  transition-all ${
+          toggleNav ? "h-96" : "h-0 hidden md:flex"
+        }`}
+      >
+        <li>
+          <Link href="/">Home</Link>
+        </li>
+        <li>
+          <Link href="/products">Products</Link>
+        </li>
+        <li>
+          <Link href="/contact">Contact</Link>
+        </li>
+      </ul>
+      <button className="md:hidden" onClick={() => setToggleNav(!toggleNav)}>
+        X
+      </button>
+    </nav>
   );
 };
 

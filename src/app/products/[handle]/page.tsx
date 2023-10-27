@@ -195,6 +195,7 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
     });
 
     revalidatePath(`/products/${handle}`);
+    // revalidatePath("/");
   };
 
   return (

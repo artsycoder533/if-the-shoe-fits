@@ -13,7 +13,7 @@ interface CartProps {
   cart: Checkout;
 }
 
-export const revalidate = 0;
+export const revalidate = 10;
 
 const Cart = async () => {
   const gql = String.raw;
@@ -67,19 +67,15 @@ const Cart = async () => {
   `;
 
   const id = cookies().get("cartId")?.value;
-  // console.log("in cart checkout id is ==>", id);
-  // console.log("cartId form cookies ==>", cartId);
   let cart;
   if (!id)
     return (
-      <button>
+      <button className="absolute">
         <FaShoppingCart />
       </button>
     );
   if (id) {
     cart = await storefront(getCartQuery, { id });
-    // cart = await getCart(checkoutId);
-    // console.log("cart from cart server ==>", cart.cart);
   }
 
   return <CartModal cart={cart.cart} />;

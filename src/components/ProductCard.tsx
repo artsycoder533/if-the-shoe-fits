@@ -99,6 +99,7 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
                   maxWidth: "100%",
                   height: "auto",
                 }}
+                placeholder="blur"
                 // priority
               />
             );

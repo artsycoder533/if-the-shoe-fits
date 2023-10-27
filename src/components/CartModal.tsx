@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FaRegWindowClose, FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import { GrClose } from "react-icons/gr";
 
 type ProductVariant = {
@@ -92,10 +92,10 @@ const CartModal = ({ cart }: CartModalProps) => {
   return (
     <>
       <button
-        className="flex flex-row relative p-2"
+        className="flex flex-row absolute p-2 lg:right-10"
         onClick={() => setToggleCart(true)}
       >
-        <FaShoppingCart />
+        <FaShoppingCart className="text-white" />
         {totalQuantity && totalQuantity > 0 ? (
           <span className="absolute top-0 -right-3 -mt-1 bg-red-500 text-white rounded-full h-6 w-6 flex items-center justify-center">
             {totalQuantity}
@@ -103,7 +103,7 @@ const CartModal = ({ cart }: CartModalProps) => {
         ) : null}
       </button>
       <aside
-        className={`absolute top-0 right-0 border h-screen w-96  p-3 bg-white text-black flex flex-col justify-between transition ${
+        className={`absolute top-0 right-0 border h-screen overflow-hidden w-96  p-3 bg-white text-black flex flex-col justify-between transition ${
           toggleCart ? "translate-0" : "translate-x-full overflow-hidden"
         }`}
       >
