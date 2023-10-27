@@ -66,13 +66,13 @@ const Navigation = ({ name }: NavigationProps) => {
           toggleNav ? "h-96" : "h-0 hidden md:flex"
         }`}
       >
-        <li>
+        <li className="hover:text-gray-300 hover:underline">
           <Link href="/">Home</Link>
         </li>
-        <li>
+        <li className="hover:text-gray-300 hover:underline">
           <Link href="/products">Products</Link>
         </li>
-        <li>
+        <li className="hover:text-gray-300 hover:underline">
           <Link href="/contact">Contact</Link>
         </li>
       </ul>
