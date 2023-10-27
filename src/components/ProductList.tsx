@@ -61,7 +61,7 @@ const ProductList = ({ product }: ProductListProps): JSX.Element | null => {
   if (!images[0]) return null;
 
   return (
-    <div className="w-[250px] flex flex-col border">
+    <div className="w-[250px] flex flex-col">
       <div
         className="w-[250px] h-[250px] flex "
         onClick={() => router.push(`/products/${handle}`)}

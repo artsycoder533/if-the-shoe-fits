@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Cart from "./Cart";
 import CartModal from "./CartModal";
+import Hamburger from "./Hamburger";
 
 type ProductVariant = {
   id: string;
@@ -58,11 +59,11 @@ const Navigation = ({ name }: NavigationProps) => {
   const [toggleNav, setToggleNav] = useState<boolean>(false);
 
   return (
-    <nav className="flex items-center justify-between pr-8 max-w-[1400px] w-[90vw] mx-auto flex-wrap md:flex-nowrap text-white">
+    <nav className="flex items-center justify-between md:pr-8 max-w-[1400px] w-[90vw] mx-auto flex-wrap md:flex-nowrap text-white">
       <h2 className="text-2xl font-bold">{name}</h2>
 
       <ul
-        className={`absolute top-12 left-0 md:static md:top-auto md:z-0 bg-black z-10 flex flex-col justify-center order-last md:order-none w-full md:w-auto md:flex-row gap-3 items-center  transition-all ${
+        className={`absolute top-16 left-0 md:static md:top-auto md:z-0 bg-black z-10 flex flex-col justify-center order-last md:order-none w-full md:w-auto md:flex-row gap-3 items-center  transition-all ${
           toggleNav ? "h-96" : "h-0 hidden md:flex"
         }`}
       >
@@ -76,9 +77,10 @@ const Navigation = ({ name }: NavigationProps) => {
           <Link href="/contact">Contact</Link>
         </li>
       </ul>
-      <button className="md:hidden" onClick={() => setToggleNav(!toggleNav)}>
+      <Hamburger toggleNav={toggleNav} setToggleNav={setToggleNav} />
+      {/* <button className="md:hidden" onClick={() => setToggleNav(!toggleNav)}>
         X
-      </button>
+      </button> */}
     </nav>
   );
 };

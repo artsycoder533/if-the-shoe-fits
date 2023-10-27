@@ -61,13 +61,8 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
   const { minVariantPrice } = priceRange;
   const { amount } = minVariantPrice;
 
-  console.log(availableForSale);
-
-  // console.log("product images", product.images);
   const imageNodes = product.images[0]?.edges.map((edge) => edge.node);
   const variantNodes = product.variants?.edges.map((edge) => edge.node);
-
-  // console.log("variant nodes ==>", variantNodes[0]);
 
   return (
     <div className="flex flex-row justify-center gap-8 mt-10">
@@ -112,7 +107,7 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
         {/* tags */}
         <div className="flex flex-row gap-2">
           {tags.map((tag) => (
-            <span key={tag} className="border p-2 rounded-full text-center ">
+            <span key={tag} className=" p-2 rounded-full text-center ">
               {tag}
             </span>
           ))}
