@@ -1,22 +1,25 @@
-import { cookies } from "next/headers";
-import Link from "next/link";
-import { useState } from "react";
-import { FaRegWindowClose, FaShoppingCart } from "react-icons/fa";
-// import {  URL } from "shopify-buy";
-import { Checkout, URL } from "shopify-buy";
-import { useCart } from "@/context/CartContext";
-import Image from "next/image";
-import CartModal from "./CartModal";
+import React from "react";
+import Navigation from "./Navigation";
 import { storefront } from "../../lib/shopify";
+import Cart from "./Cart";
+import { cookies } from "next/headers";
+import { FaShoppingCart } from "react-icons/fa";
 
-interface CartProps {
-  cart: Checkout;
-}
+type Props = {};
 
-export const revalidate = 0;
-
-const Cart = async () => {
+const Header = async (props: Props) => {
   const gql = String.raw;
+
+  const navItemsQuery = gql`
+    query MenuItems {
+      shop {
+        name
+      }
+    }
+  `;
+
+  const { shop } = await storefront(navItemsQuery);
+  const { name } = shop;
 
   const getCartQuery = gql`
     query FetchCart($id: ID!) {
@@ -70,19 +73,22 @@ const Cart = async () => {
   // console.log("in cart checkout id is ==>", id);
   // console.log("cartId form cookies ==>", cartId);
   let cart;
-  if (!id)
-    return (
-      <button>
-        <FaShoppingCart />
-      </button>
-    );
+  //   if (!id)
+  //     return (
+  //       <button>
+  //         <FaShoppingCart />
+  //       </button>
+  //     );
   if (id) {
     cart = await storefront(getCartQuery, { id });
     // cart = await getCart(checkoutId);
     // console.log("cart from cart server ==>", cart.cart);
   }
-
-  return <CartModal cart={cart.cart} />;
+  return (
+    <header>
+      <Navigation name={name} cart={cart} />
+    </header>
+  );
 };
 
-export default Cart;
+export default Header;

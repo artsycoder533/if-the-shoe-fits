@@ -1,7 +1,7 @@
-import Navigation from "@/components/Navigation";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +21,7 @@ export default async function RootLayout({
         className={`${inter.className} flex min-h-full flex-col overflow-x-hidden`}
       >
         <main className="grow">
-          <Navigation />
+          <Header />
           {children}
         </main>
       </body>

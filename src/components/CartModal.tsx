@@ -69,7 +69,12 @@ const CartModal = ({ cart }: CartModalProps) => {
     setQuantity(quanity);
   }, [quantity, cart]);
 
-  if (!cart) return <FaShoppingCart />;
+  if (!cart)
+    return (
+      <button>
+        <FaShoppingCart />
+      </button>
+    );
   const { id, checkoutUrl, lines, totalQuantity, cost } = cart || {};
   const { subtotalAmount, totalTaxAmount } = cost || {};
   const { amount, currencyCode } = subtotalAmount || {};
@@ -86,7 +91,7 @@ const CartModal = ({ cart }: CartModalProps) => {
 
   return (
     <>
-      <div
+      <button
         className="flex flex-row relative p-2"
         onClick={() => setToggleCart(true)}
       >
@@ -96,7 +101,7 @@ const CartModal = ({ cart }: CartModalProps) => {
             {totalQuantity}
           </span>
         ) : null}
-      </div>
+      </button>
       <aside
         className={`absolute top-0 right-0 border h-screen w-96  p-3 bg-white text-black flex flex-col justify-between transition ${
           toggleCart ? "translate-0" : "translate-x-full overflow-hidden"
