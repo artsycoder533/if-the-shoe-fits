@@ -201,35 +201,33 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
     (edge: { node: any }) => edge.node
   );
 
-  const getShit = async () => {
-    const addt = variantNodes?.map(
-      (variant: { metafields: any; selectedOptions: any }) => {
-        const { metafields, selectedOptions } = variant;
-        const key = selectedOptions[0]?.value;
-        const value = metafields[0]?.value
-          ? JSON.parse(metafields[0]?.value)
-          : undefined;
-        const result = [];
-        if (metafields[0]?.value) {
-          const imageIds = JSON.parse(metafields[0].value);
-          imageIds.map(async (val: string) => {
-            const node = await fetchImageURLs(val);
-            console.log("url=>", node.originalSource.url);
-            result.push(url);
-          });
-        } else {
-          result.push(undefined);
-        }
-        return {
-          variant: {
-            color: key,
-            // images: value,
-            images: result,
-          },
-        };
-      }
-    );
-  };
+  // const addt = variantNodes?.map(
+  //   (variant: { metafields: any; selectedOptions: any }) => {
+  //     const { metafields, selectedOptions } = variant;
+  //     const key = selectedOptions[0]?.value;
+  //     const value = metafields[0]?.value
+  //       ? JSON.parse(metafields[0]?.value)
+  //       : undefined;
+  //     const result = [];
+  //     if (metafields[0]?.value) {
+  //       const imageIds = JSON.parse(metafields[0].value);
+  //       imageIds.map(async (val: string) => {
+  //         const node = await fetchImageURLs(val);
+  //         console.log("url=>", node.originalSource.url);
+  //         result.push(url);
+  //       });
+  //     } else {
+  //       result.push(undefined);
+  //     }
+  //     return {
+  //       variant: {
+  //         color: key,
+  //         // images: value,
+  //         images: result,
+  //       },
+  //     };
+  //   }
+  // );
 
   const addt = variantNodes?.map(
     (variant: { metafields: any; selectedOptions: any }) => {
