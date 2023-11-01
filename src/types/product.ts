@@ -18,6 +18,7 @@ export type Variant = {
   hasNextPage: true;
   hasPreviousPage: true;
   availableForSale: boolean;
+  metafields: Metafield[];
   // Add other properties specific to the Variant if needed
 };
 
@@ -69,4 +70,8 @@ export type FeaturedImage = {
   // id: string;
   url: string;
   altText: string;
+};
+
+export type Metafield = {
+  value: string;
 };

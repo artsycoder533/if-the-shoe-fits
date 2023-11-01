@@ -3,7 +3,7 @@ const nextConfig = {};
 
 module.exports = {
   images: {
-    domains: ["external-content.duckduckgo.com", "cdn.shopify.com"],
+    domains: ["cdn.shopify.com", "gid://shopify/MediaImage/"],
   },
   experimental: {
     serverActions: true,
