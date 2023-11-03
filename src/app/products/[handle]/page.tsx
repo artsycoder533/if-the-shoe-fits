@@ -184,50 +184,20 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
   };
 
   const fetchImageURLs = async (mediaId: string) => {
-    const imageURLs: string[] = [];
-
     try {
-      const response = await admin(getShopifyMediaUrlQuery, { mediaId });
-      console.log(response);
+      const response = await admin(getShopifyMediaUrlQuery, { id: mediaId });
+      const media = response.node;
+      // console.log("reponse ==>", media);
+      return media ? media.originalSource.url : undefined;
     } catch (error) {
       console.error("Error fetching image URL:", error);
     }
-
-    return imageURLs;
   };
 
   // get images ids to query for each product variant
   const variantNodes = product.variants?.edges.map(
     (edge: { node: any }) => edge.node
   );
-
-  // const addt = variantNodes?.map(
-  //   (variant: { metafields: any; selectedOptions: any }) => {
-  //     const { metafields, selectedOptions } = variant;
-  //     const key = selectedOptions[0]?.value;
-  //     const value = metafields[0]?.value
-  //       ? JSON.parse(metafields[0]?.value)
-  //       : undefined;
-  //     const result = [];
-  //     if (metafields[0]?.value) {
-  //       const imageIds = JSON.parse(metafields[0].value);
-  //       imageIds.map(async (val: string) => {
-  //         const node = await fetchImageURLs(val);
-  //         console.log("url=>", node.originalSource.url);
-  //         result.push(url);
-  //       });
-  //     } else {
-  //       result.push(undefined);
-  //     }
-  //     return {
-  //       variant: {
-  //         color: key,
-  //         // images: value,
-  //         images: result,
-  //       },
-  //     };
-  //   }
-  // );
 
   const addt = variantNodes?.map(
     (variant: { metafields: any; selectedOptions: any }) => {
@@ -236,51 +206,43 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
       const value = metafields[0]?.value
         ? JSON.parse(metafields[0]?.value)
         : undefined;
-      // const result = [];
-      // if (metafields[0]?.value) {
-      //   const imageIds = JSON.parse(metafields[0].value);
-      //   imageIds.map((val: string) => {
-      //     const url = fetchImageURLs(val);
-      //     console.log("url=>", url);
-      //     // result.push(url);
-      //   });
-      // } else {
-      //   result.push(undefined);
-      // }
       return {
         variant: {
           color: key,
           images: value,
-          // images: result,
         },
       };
     }
   );
 
-  //replace shopify media id with image url
-  // const updatedAddt = addt;
-  // for (const item of addt) {
-  //   const key = Object.keys(item)[0];
-  //   const mediaIds = item[key];
+  const fetchAndReplaceUrls = async () => {
+    for (const item of addt) {
+      const variant = item.variant;
+      const images = variant.images;
 
-  //   if (Array.isArray(mediaIds)) {
-  //     const imageUrls = await fetchImageURLs(mediaIds);
-  //     const updatedItem = { [key]: imageUrls };
-  //     updatedAddt.push(updatedItem);
-  //   } else {
-  //     updatedAddt.push(item);
-  //   }
-  // }
-  console.log("updatedAdddt==>", addt);
-  // addt.forEach((el) => {
-  //   console.log("each iteration=", el.variant.color, el.variant.images);
-  //   return el;
-  // });
+      if (images && Array.isArray(images)) {
+        const urls = await Promise.all(
+          images.map((mediaId) => fetchImageURLs(mediaId))
+        );
+        variant.images = urls;
+      }
+      // console.log("images", images);
+    }
+    // console.log("updated data ==>", addt);
+  };
+
+  fetchAndReplaceUrls();
+
+  // console.log("updatedAdddt==>", addt);
 
   return (
     <div>
       <BreadCrumbs title={product?.title} />
-      <ProductCard product={product} addToCart={handleAddToCart} />
+      <ProductCard
+        product={product}
+        addToCart={handleAddToCart}
+        additionalData={addt}
+      />
     </div>
   );
 };

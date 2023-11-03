@@ -8,7 +8,7 @@ import {
   Variant,
 } from "@/types/product";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 type SelectedOption = {
   name: string;
@@ -48,9 +48,14 @@ type Metafield = {
 interface ProductCardProps {
   product: Product;
   addToCart: (quanitiy: number, variantID: string) => void;
+  additionalData: [];
 }
 
-const ProductCard = ({ product, addToCart }: ProductCardProps) => {
+const ProductCard = ({
+  product,
+  addToCart,
+  additionalData,
+}: ProductCardProps) => {
   const [activeVariantId, setActiveVariantId] = useState<string>("");
   const [activeColor, setActiveColor] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
@@ -58,7 +63,7 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
   const [featuredImageDisplay, setFeaturedImageDisplay] = useState<string>();
   const [additionalImages, setAdditionalImages] = useState<
     string[] | undefined
-  >();
+  >([]);
 
   useEffect(() => {
     if (product.variants.edges && product.variants.edges.length > 0) {
@@ -67,12 +72,28 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
         setActiveVariantId(product.variants.edges[0].node.id);
         setFeaturedImageDisplay(product.variants.edges[0].node.image.url);
         setActiveVariant(product.variants.edges[0].node);
-        // console.log("metafields", additionalImages);
       }
     }
   }, [product.variants]);
 
+  const getAdditionalImages = useCallback(() => {
+    const result = additionalData
+      .filter((data) => data?.variant?.color === activeColor)
+      .map((data) => data?.variant?.images)
+      .filter((images) => Array.isArray(images))
+      .flat(); // Use the flat function to flatten nested arrays
+    console.log("result ==>", result);
+    const updatedImages = result.length > 0 ? result : undefined;
+    setAdditionalImages(updatedImages);
+  }, [additionalData, activeColor]);
+
+  useEffect(() => {
+    if (!additionalData) return;
+    getAdditionalImages();
+  }, [activeColor, additionalData, getAdditionalImages]);
+
   if (!product) return;
+  if (!additionalData) return;
 
   const {
     id,
@@ -98,11 +119,9 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
 
   const variantNodes = product.variants?.edges.map((edge) => edge.node);
 
-  // console.log(variantNodes);
-
   return (
     <div className="flex flex-col lg:flex-row justify-center gap-8 mt-10 max-w-[1400px] w-[90vw] mx-auto">
-      <div className="flex flex-col gap-2 basis-1/2 ">
+      <div className="flex flex-col gap-2 basis-1/2">
         <div className="flex max-w-[500px] h-[500px] justify-start mx-auto lg:mx-0">
           <Image
             src={featuredImageDisplay || featuredImageURL}
@@ -120,29 +139,30 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
           />
         </div>
 
-        {/* <div className="flex flex-row gap-2 border border-red-500 h-28 w-[500px]">
-          {additionalImages?.map((url) => {
-            return (
-              <></>
-              // <Image
-              //   key={id}
-              //   src={url}
-              //   alt={activeColor}
-              //   width={100}
-              //   height={100}
-              //   // sizes="100vw"
-              //   style={{
-              //     maxWidth: "100%",
-              //     height: "auto",
-              //   }}
-              //   placeholder="blur"
-              //   blurDataURL={url}
-              //   className="object-fit"
-              //   // priority
-              // />
-            );
-          })}
-        </div> */}
+        <div className="flex flex-row gap-2 h-28 max-w-[500px] mx-auto w-[90vw]">
+          {additionalImages &&
+            additionalImages?.map((image) => {
+              console.log("image after mapping! ==>", image);
+              return (
+                <Image
+                  key={image}
+                  src={encodeURI(image)}
+                  alt={activeColor}
+                  width={100}
+                  height={100}
+                  // sizes="100vw"
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto",
+                  }}
+                  placeholder="blur"
+                  blurDataURL={image}
+                  className="object-fit"
+                  // priority
+                />
+              );
+            })}
+        </div>
       </div>
       <div className="flex flex-col gap-3 basis-1/2  mx-auto">
         <h2 className="text-2xl">{title}</h2>
@@ -173,9 +193,7 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
               price,
             } = variant;
             const { amount } = price;
-            // console.log("variant ===>", variant);
             const { altText, url, id } = image;
-            // console.log(selectedOptions);
 
             return (
               <div
@@ -190,11 +208,6 @@ const ProductCard = ({ product, addToCart }: ProductCardProps) => {
                   setActiveColor(title);
                   setFeaturedImageDisplay(url);
                   setActiveVariant(variant);
-                  // console.log(
-                  //   "addl images==>",
-                  //   JSON.parse(metafields[0]?.value)
-                  // );
-                  // setAdditionalImages(JSON.parse(metafields[0]?.value));
                 }}
               >
                 <Image
