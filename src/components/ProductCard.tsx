@@ -82,7 +82,6 @@ const ProductCard = ({
       .map((data) => data?.variant?.images)
       .filter((images) => Array.isArray(images))
       .flat(); // Use the flat function to flatten nested arrays
-    console.log("result ==>", result);
     const updatedImages = result.length > 0 ? result : undefined;
     setAdditionalImages(updatedImages);
   }, [additionalData, activeColor]);
@@ -113,8 +112,6 @@ const ProductCard = ({
   // const { minVariantPrice } = priceRange;
   // const { amount } = minVariantPrice;
 
-  // console.log("product==>", product);
-
   const imageNodes = product.images[0]?.edges.map((edge) => edge.node);
 
   const variantNodes = product.variants?.edges.map((edge) => edge.node);
@@ -142,7 +139,6 @@ const ProductCard = ({
         <div className="flex flex-row gap-2 h-28 max-w-[500px] mx-auto w-[90vw]">
           {additionalImages &&
             additionalImages?.map((image) => {
-              console.log("image after mapping! ==>", image);
               return (
                 <Image
                   key={image}

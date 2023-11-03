@@ -79,6 +79,8 @@ const CartModal = ({ cart }: CartModalProps) => {
   const { subtotalAmount, totalTaxAmount } = cost || {};
   const { amount, currencyCode } = subtotalAmount || {};
 
+  console.log("cart ==>", cart);
+
   const formatPrice = (amount: string, currencyCode: string) => {
     if (!amount || !currencyCode) return;
     const price = new Intl.NumberFormat(undefined, {
@@ -131,8 +133,8 @@ const CartModal = ({ cart }: CartModalProps) => {
               const { amount } = price || {};
               const { url, altText } = image || {};
               return (
-                <div key={merchandiseId} className="border-b flex py-2">
-                  {altText && url ? (
+                <div key={merchandiseId} className="border-b flex py-2 gap-2">
+                  {url ? (
                     <Image
                       alt={altText || `image of ${variantTitle}`}
                       src={url}
