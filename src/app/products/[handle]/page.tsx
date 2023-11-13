@@ -226,12 +226,12 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
         );
         variant.images = urls;
       }
-      // console.log("images", images);
+      console.log("images", images);
     }
     // console.log("updated data ==>", addt);
   };
 
-  fetchAndReplaceUrls();
+  await fetchAndReplaceUrls();
 
   // console.log("updatedAdddt==>", addt);
 
