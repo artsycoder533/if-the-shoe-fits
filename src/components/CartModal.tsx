@@ -79,7 +79,9 @@ const CartModal = ({ cart }: CartModalProps) => {
   const { subtotalAmount, totalTaxAmount } = cost || {};
   const { amount, currencyCode } = subtotalAmount || {};
 
-  console.log("cart ==>", cart);
+  // console.log("cart ==>", cart);
+
+  console.log("checkoutURL==>", checkoutUrl);
 
   const formatPrice = (amount: string, currencyCode: string) => {
     if (!amount || !currencyCode) return;
@@ -94,7 +96,7 @@ const CartModal = ({ cart }: CartModalProps) => {
   return (
     <>
       <button
-        className="flex flex-row absolute p-2 right-24 md:right-8 lg:right-10"
+        className="flex flex-row absolute p-2 right-20 md:right-8 lg:right-10"
         onClick={() => setToggleCart(true)}
       >
         <FaShoppingCart className="text-white text-2xl" />

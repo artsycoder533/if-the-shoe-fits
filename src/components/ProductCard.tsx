@@ -146,6 +146,7 @@ const ProductCard = ({
                   alt={activeColor}
                   width={100}
                   height={100}
+                  onClick={() => setFeaturedImageDisplay(image)}
                   // sizes="100vw"
                   style={{
                     maxWidth: "100%",
@@ -153,7 +154,7 @@ const ProductCard = ({
                   }}
                   placeholder="blur"
                   blurDataURL={image}
-                  className="object-fit"
+                  className="object-fit pointer"
                   // priority
                 />
               );
