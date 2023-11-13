@@ -20,6 +20,15 @@ type VariantNode = {
   // Add other properties as needed
 };
 
+type AdditionalData = {
+  variant: ImageVariant,
+};
+
+type ImageVariant = {
+  color: string;
+  images: string[];
+};
+
 // export type Variant = {
 //   id: string;
 //   title: string;
@@ -48,7 +57,7 @@ type Metafield = {
 interface ProductCardProps {
   product: Product;
   addToCart: (quanitiy: number, variantID: string) => void;
-  additionalData: [];
+  additionalData: AdditionalData[];
 }
 
 const ProductCard = ({

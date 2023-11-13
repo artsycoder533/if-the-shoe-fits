@@ -233,7 +233,7 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
 
   await fetchAndReplaceUrls();
 
-  // console.log("updatedAdddt==>", addt);
+  console.log("updatedAdddt==>", addt);
 
   return (
     <div>
