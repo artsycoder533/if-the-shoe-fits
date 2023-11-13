@@ -97,6 +97,7 @@ const ProductCard = ({
 
   useEffect(() => {
     if (!additionalData) return;
+    console.log('additional data exists')
     getAdditionalImages();
   }, [activeColor, additionalData, getAdditionalImages]);
 
@@ -159,6 +160,7 @@ const ProductCard = ({
                   // sizes="100vw"
                   style={{
                     maxWidth: "100%",
+                    width: "auto",
                     height: "auto",
                   }}
                   placeholder="blur"
