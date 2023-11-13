@@ -136,7 +136,7 @@ const ProductCard = ({
           />
         </div>
 
-        <div className="flex flex-row gap-2 h-28 max-w-[500px] mx-auto w-[90vw]">
+        <div className="flex flex-row gap-2 h-28 max-w-[500px] mx-auto lg:m-0 w-[90vw]">
           {additionalImages &&
             additionalImages?.map((image) => {
               return (
