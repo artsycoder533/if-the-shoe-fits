@@ -122,7 +122,8 @@ const ProductCard = ({
   // const { minVariantPrice } = priceRange;
   // const { amount } = minVariantPrice;
 
-  const imageNodes = product.images[0]?.edges.map((edge) => edge.node);
+  const imageNodes = images.edges;
+  console.log('image nodes', images.edges)
 
   const variantNodes = product.variants?.edges.map((edge) => edge.node);
 
@@ -146,25 +147,27 @@ const ProductCard = ({
           />
         </div>
 
-        {additionalImages && additionalImages.length > 0 && <div className="flex flex-row gap-2 h-28 max-w-[500px] mx-auto lg:m-0 w-[90vw]">
+        {imageNodes && imageNodes.length > 0 && <div className="flex flex-row gap-2 h-28 max-w-[500px] mx-auto lg:m-0 w-[90vw] border overflow-x-auto">
        
-            {additionalImages?.map((image) => {
+            {imageNodes?.map((node) => {
+              const {altText, id, url} = node.node;
+              console.log(node, altText, id, url)
               return (
                 <Image
-                  key={image}
-                  src={encodeURI(image)}
-                  alt={activeColor}
+                  key={id}
+                  src={url}
+                  alt={altText}
                   width={100}
                   height={100}
-                  onClick={() => setFeaturedImageDisplay(image)}
+                  onClick={() => setFeaturedImageDisplay(url)}
                   // sizes="100vw"
                   style={{
                     maxWidth: "100%",
                     width: "auto",
                     height: "auto",
                   }}
-                  placeholder="blur"
-                  blurDataURL={image}
+                  // placeholder="blur"
+                  // blurDataURL={url}
                   className="object-fit pointer"
                   // priority
                 />
