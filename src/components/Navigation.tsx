@@ -4,6 +4,7 @@ import Link from "next/link";
 import Cart from "./Cart";
 import CartModal from "./CartModal";
 import Hamburger from "./Hamburger";
+import { GiConverseShoe } from "react-icons/gi";
 
 type ProductVariant = {
   id: string;
@@ -60,7 +61,7 @@ const Navigation = ({ name }: NavigationProps) => {
 
   return (
     <nav className="flex items-center justify-between md:pr-8 max-w-[1400px] w-[90vw] mx-auto flex-wrap md:flex-nowrap text-white">
-      <h2 className="text-2xl font-bold">{name}</h2>
+      <h2 className="text-2xl font-bold flex items-center gap-1"><GiConverseShoe/>{name}</h2>
 
       <ul
         className={`absolute top-16 left-0 md:static md:top-auto md:z-0 bg-black z-10 flex flex-col justify-center order-last md:order-none w-full md:w-auto md:flex-row gap-3 items-center  transition-all ${
