@@ -57,13 +57,13 @@ type Metafield = {
 interface ProductCardProps {
   product: Product;
   addToCart: (quanitiy: number, variantID: string) => void;
-  additionalData: AdditionalData[];
+  // additionalData: AdditionalData[];
 }
 
 const ProductCard = ({
   product,
   addToCart,
-  additionalData,
+  // additionalData,
 }: ProductCardProps) => {
   const [activeVariantId, setActiveVariantId] = useState<string>("");
   const [activeColor, setActiveColor] = useState<string>("");
@@ -85,24 +85,24 @@ const ProductCard = ({
     }
   }, [product.variants]);
 
-  const getAdditionalImages = useCallback(() => {
-    const result = additionalData
-      .filter((data) => data?.variant?.color === activeColor)
-      .map((data) => data?.variant?.images)
-      .filter((images) => Array.isArray(images))
-      .flat(); // Use the flat function to flatten nested arrays
-    const updatedImages = result.length > 0 ? result : undefined;
-    setAdditionalImages(updatedImages);
-  }, [additionalData, activeColor]);
+  // const getAdditionalImages = useCallback(() => {
+  //   const result = additionalData
+  //     .filter((data) => data?.variant?.color === activeColor)
+  //     .map((data) => data?.variant?.images)
+  //     .filter((images) => Array.isArray(images))
+  //     .flat(); // Use the flat function to flatten nested arrays
+  //   const updatedImages = result.length > 0 ? result : undefined;
+  //   setAdditionalImages(updatedImages);
+  // }, [additionalData, activeColor]);
 
-  useEffect(() => {
-    if (!additionalData) return;
-    console.log('additional data exists')
-    getAdditionalImages();
-  }, [activeColor, additionalData, getAdditionalImages]);
+  // useEffect(() => {
+  //   if (!additionalData) return;
+  //   console.log('additional data exists')
+  //   getAdditionalImages();
+  // }, [activeColor, additionalData, getAdditionalImages]);
 
   if (!product) return;
-  if (!additionalData) return;
+  // if (!additionalData) return;
 
   const {
     id,
@@ -123,7 +123,6 @@ const ProductCard = ({
   // const { amount } = minVariantPrice;
 
   const imageNodes = images.edges;
-  console.log('image nodes', images.edges)
 
   const variantNodes = product.variants?.edges.map((edge) => edge.node);
 
@@ -151,7 +150,6 @@ const ProductCard = ({
        
             {imageNodes?.map((node) => {
               const {altText, id, url} = node.node;
-              console.log(node, altText, id, url)
               return (
                 <Image
                   key={id}
@@ -166,10 +164,7 @@ const ProductCard = ({
                     width: "auto",
                     height: "auto",
                   }}
-                  // placeholder="blur"
-                  // blurDataURL={url}
                   className="object-fit pointer"
-                  // priority
                 />
               );
             })}
