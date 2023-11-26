@@ -1,6 +1,7 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
 import ProductList from "./ProductList";
+import { LuFilter } from "react-icons/lu";
 
 type Product = {
   id: string;
@@ -39,12 +40,12 @@ type FeaturedImage = {
 
 type PriceRange = {
   minVariantPrice: Price;
-}
+};
 
 type Price = {
   amount: string;
   currencyCode: string;
-}
+};
 
 interface ProductListProps {
   products: Product[];
@@ -56,29 +57,37 @@ const ProductsList = ({ products }: ProductListProps) => {
 
   const sortProducts = useCallback(() => {
     const copyOfProducts = [...products];
-    if (sortType === 'a-z') {
+    if (sortType === "a-z") {
       copyOfProducts.sort((a, b) => a.title.localeCompare(b.title));
-    } else if (sortType === 'z-a') {
+    } else if (sortType === "z-a") {
       copyOfProducts.sort((a, b) => b.title.localeCompare(a.title));
-    } else if (sortType === 'low') {
-      copyOfProducts.sort((a, b) => parseFloat(a.priceRange.minVariantPrice.amount) - parseFloat(b.priceRange.minVariantPrice.amount));
-    } else if (sortType === 'high') {
-      copyOfProducts.sort((a, b) => parseFloat(b.priceRange.minVariantPrice.amount) - parseFloat(a.priceRange.minVariantPrice.amount));
+    } else if (sortType === "low") {
+      copyOfProducts.sort(
+        (a, b) =>
+          parseFloat(a.priceRange.minVariantPrice.amount) -
+          parseFloat(b.priceRange.minVariantPrice.amount)
+      );
+    } else if (sortType === "high") {
+      copyOfProducts.sort(
+        (a, b) =>
+          parseFloat(b.priceRange.minVariantPrice.amount) -
+          parseFloat(a.priceRange.minVariantPrice.amount)
+      );
     }
     setSortedProducts(copyOfProducts);
   }, [sortType, products]);
 
   useEffect(() => {
     sortProducts();
-  }, [sortProducts])
+  }, [sortProducts]);
 
-  const handleSort = (e: React.ChangeEvent<HTMLSelectElement> ) => {
-    setSortType(e.target.value)
+  const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortType(e.target.value);
   };
 
   return (
     <section className="flex flex-col max-w-[1400px] w-[90vw] mx-auto">
-      <form className="flex justify-between items-center w-64 self-end mt-4">
+      <form className="flex justify-between items-center self-end mt-10">
         <label htmlFor="sortType">Sort By:</label>
         <select
           name="sortType"
@@ -93,7 +102,8 @@ const ProductsList = ({ products }: ProductListProps) => {
           <option value="z-a">Name: (Z-A)</option>
         </select>
       </form>
-      <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center gap-6 mt-10 max-w-[1400px] w-[90vw] mx-auto">
+
+      <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center mt-2 gap-6 max-w-[1400px] w-[90vw] mx-auto">
         {products && products.length > 0 ? (
           sortedProducts?.map((product: Product) => (
             <ProductList key={product.handle} product={product} />

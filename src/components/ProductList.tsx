@@ -12,19 +12,8 @@ type Product = {
   title: string;
   options: [];
   images: ShopifyImage[];
-  variants: Variant[];
   featuredImage: FeaturedImage;
-};
-
-type Variant = {
-  id: string;
-  title: string;
-  price: {
-    amount: string;
-    currencyCode: string;
-    type: [];
-  };
-  availableForSale: boolean;
+  priceRange: PriceRange;
 };
 
 type ShopifyImage = {
@@ -37,6 +26,15 @@ type FeaturedImage = {
   url: string;
   altText: string;
 };
+
+type PriceRange = {
+  minVariantPrice: Price;
+}
+
+type Price = {
+  amount: string;
+  currencyCode: string;
+}
 
 interface ProductListProps {
   product: Product;
@@ -52,11 +50,11 @@ const ProductList = ({ product }: ProductListProps): JSX.Element | null => {
     availableForSale,
     featuredImage,
     id,
-    variants,
+    priceRange,
   } = product || {};
   const { url, altText } = featuredImage || {};
-  const { price } = variants[0];
-  const { amount, currencyCode } = price;
+  const { minVariantPrice } = priceRange;
+  const { amount, currencyCode } = minVariantPrice;
 
   if (!images[0]) return null;
 

@@ -38,23 +38,6 @@ export default async function Products() {
               }
             }
             isGiftCard
-            variants(first: 10) {
-              edges {
-                node {
-                  id
-                  image {
-                    url
-                    altText
-                    id
-                  }
-                  price {
-                    amount
-                    currencyCode
-                  }
-                  availableForSale
-                }
-              }
-            }
           }
         }
       }
@@ -69,9 +52,6 @@ export default async function Products() {
       ...node,
       images: node.images.edges.map(
         (imageEdge: { node: any }) => imageEdge.node
-      ),
-      variants: node.variants.edges.map(
-        (variantEdge: { node: any }) => variantEdge.node
       ),
     };
   });
