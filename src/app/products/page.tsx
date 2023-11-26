@@ -31,6 +31,12 @@ export default async function Products() {
                 }
               }
             }
+            priceRange {
+              minVariantPrice {
+                amount
+                currencyCode
+              }
+            }
             isGiftCard
             variants(first: 10) {
               edges {
