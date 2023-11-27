@@ -69,6 +69,7 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
                 altText
                 id
               }
+              quantityAvailable
               price {
                 amount
                 currencyCode

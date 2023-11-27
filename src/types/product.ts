@@ -17,6 +17,7 @@ export type Variant = {
   selectedOptions: SelectedOption[];
   hasNextPage: true;
   hasPreviousPage: true;
+  quantityAvailable: number;
   availableForSale: boolean;
   metafields: Metafield[];
   // Add other properties specific to the Variant if needed

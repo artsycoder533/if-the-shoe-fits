@@ -40,6 +40,7 @@ type ImageVariant = {
 //   weight: number;
 //   available: boolean;
 //   image: ShopifyImage;
+//   quantityAvailable: number;
 //   selectedOptions: SelectedOption[];
 //   hasNextPage: true;
 //   hasPreviousPage: true;
@@ -125,6 +126,7 @@ const ProductCard = ({
   const imageNodes = images.edges;
 
   const variantNodes = product.variants?.edges.map((edge) => edge.node);
+  console.log('variant-->', variantNodes)
 
   return (
     <div className="flex flex-col lg:flex-row justify-center gap-8 mt-10 max-w-[1400px] w-[90vw] mx-auto">
@@ -187,36 +189,44 @@ const ProductCard = ({
         <h3>
           {variantNodes[0]?.selectedOptions[0]?.name || "N/A"}: {activeColor}
         </h3>
-        <div className="flex flex-row items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4 w-80">
           {variantNodes?.map((variant) => {
             // console.log("variant ==>", variant);
             const {
               selectedOptions,
               metafields,
               id: variantId,
+              quantityAvailable,
               image,
               title,
               price,
             } = variant;
             const { amount } = price;
             const { altText, url, id } = image;
+            console.log('quanity-->', quantityAvailable)
 
             return (
               <div
                 key={variantId}
-                className={`flex cursor-pointer w-16 h-16  ${
+                className={`flex  w-12 h-12 rounded-md items-center justify-center border  ${
                   activeColor === title
                     ? "outline-black outline-dashed outline-offset-4 outline-2"
-                    : null
-                }`}
+                    : ""
+                } ${quantityAvailable > 0 ? "border cursor-pointer" : "bg-gray-200 cursor-not-allowed"}`}
                 onClick={() => {
-                  setActiveVariantId(variantId);
-                  setActiveColor(title);
-                  setFeaturedImageDisplay(url);
-                  setActiveVariant(variant);
+                  if(quantityAvailable > 0) {
+                    setActiveVariantId(variantId);
+                    setActiveColor(title);
+                    setFeaturedImageDisplay(url);
+                    setActiveVariant(variant);
+                  }
+                  
                 }}
               >
-                <Image
+              
+                  {title}
+            
+                {/* <Image
                   src={url}
                   alt={altText || activeColor}
                   width={64}
@@ -227,7 +237,7 @@ const ProductCard = ({
                     maxWidth: "100%",
                     height: "auto",
                   }}
-                />
+                /> */}
               </div>
             );
           })}
