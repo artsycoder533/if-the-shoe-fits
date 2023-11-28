@@ -87,7 +87,7 @@ const ProductsList = ({ products }: ProductListProps) => {
 
   return (
     <section className="flex flex-col max-w-[1400px] w-[90vw] mx-auto">
-      <form className="flex justify-between items-center self-end mt-10">
+      <form className="flex justify-between items-center self-end mt-10 border p-1">
         <label htmlFor="sortType">Sort By:</label>
         <select
           name="sortType"

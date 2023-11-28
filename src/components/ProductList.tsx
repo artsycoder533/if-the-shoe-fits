@@ -75,8 +75,8 @@ const ProductList = ({ product }: ProductListProps): JSX.Element | null => {
         />
       </div>
       <div className="h-24 py-2 text-left">
-        <p className="text-sm font-medium">{title}</p>
-        <p className="text-xs py-2">{`${formatPrice(
+        <p className="text-sm text-gray-600">{title}</p>
+        <p className="text-md py-2 font-medium">{`${formatPrice(
           String(amount),
           currencyCode
         )}`}</p>

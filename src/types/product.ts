@@ -34,11 +34,14 @@ export type Product = {
   handle: string;
   title: string;
   options: [];
+  // images: {
+  //   edges: {
+  //     node: ShopifyImage;
+  //   }[];
+  // }[];
   images: {
-    edges: {
-      node: ShopifyImage;
-    }[];
-  }[];
+    edges: Edge<ShopifyImage>[],
+  }
   variants: {
     edges: Edge<Variant>[]; // Include the 'edges' property
   };

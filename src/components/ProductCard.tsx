@@ -123,10 +123,12 @@ const ProductCard = ({
   // const { minVariantPrice } = priceRange;
   // const { amount } = minVariantPrice;
 
-  const imageNodes = images.edges;
+  // const imageNodes = images?.edges;
+  const imageNodes = product.images?.edges.map((edge => edge.node))
+  // console.log('imageNodes===>', imageNodes)
 
   const variantNodes = product.variants?.edges.map((edge) => edge.node);
-  console.log('variant-->', variantNodes)
+  // console.log('variant-->', variantNodes)
 
   return (
     <div className="flex flex-col lg:flex-row justify-center gap-8 mt-10 max-w-[1400px] w-[90vw] mx-auto">
@@ -148,10 +150,10 @@ const ProductCard = ({
           />
         </div>
 
-        {imageNodes && imageNodes.length > 0 && <div className="flex flex-row gap-2 h-28 max-w-[500px] mx-auto lg:m-0 w-[90vw] border overflow-x-auto">
+        {imageNodes && imageNodes.length > 0 && <div className="flex flex-row gap-2 h-28 max-w-[500px] mx-auto lg:m-0 w-[90vw] overflow-x-auto">
        
-            {imageNodes?.map((node) => {
-              const {altText, id, url} = node.node;
+            {imageNodes?.map((image: any) => {
+              const {altText, id, url} = image;
               return (
                 <Image
                   key={id}
@@ -203,7 +205,7 @@ const ProductCard = ({
             } = variant;
             const { amount } = price;
             const { altText, url, id } = image;
-            console.log('quanity-->', quantityAvailable)
+            // console.log('quanity-->', quantityAvailable)
 
             return (
               <div
