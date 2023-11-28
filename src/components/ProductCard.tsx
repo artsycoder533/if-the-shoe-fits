@@ -158,7 +158,7 @@ const ProductCard = ({
                 <Image
                   key={id}
                   src={url}
-                  alt={altText}
+                  alt={altText || title}
                   width={100}
                   height={100}
                   onClick={() => setFeaturedImageDisplay(url)}

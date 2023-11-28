@@ -24,7 +24,7 @@ const Hero = async ({ title }: Props) => {
         autoPlay
         loop
         muted
-        preload="metadata"
+        preload="auto"
         className="absolute top-0 left-0 w-full h-full object-cover"
       >
         <source src={"/videos/hero-vid.mp4"} type="video/mp4" />
