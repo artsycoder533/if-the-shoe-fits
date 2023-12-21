@@ -33,7 +33,7 @@ const Hero = async ({ title }: Props) => {
 
       <div className="z-10 text-white flex flex-col w-[90vw] sm:w-auto mx-auto">
         <h1 className="text-7xl font-bold flex flex-col gap-1">
-          <span className="inline-block">Make</span>
+          <span className="inline-block first-letter:text-purple-700">Make</span>
           <span className="inline-block">every</span>
           <span className="inline-block">step</span>
           <span className="inline-block">a statement.</span>
