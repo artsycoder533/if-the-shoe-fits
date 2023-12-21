@@ -1,4 +1,10 @@
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'If The Shoe Fits | Returns & Exchanges',
+  description: 'A hip sneaker boutique nestled in the heart of the Mall of America.'
+}
 
 const ReturnsExchanges = () => {
   return (

@@ -97,7 +97,7 @@ const CartModal = ({ cart }: CartModalProps) => {
       >
         <FaShoppingCart className="text-white text-2xl" />
         {totalQuantity && totalQuantity > 0 ? (
-          <span className="absolute top-0 -right-3 -mt-1 bg-red-500 text-white rounded-full h-6 w-6 flex items-center justify-center">
+          <span className="absolute top-0 -right-3 -mt-1 bg-purple-500 text-white rounded-full h-6 w-6 flex items-center justify-center">
             {totalQuantity}
           </span>
         ) : null}

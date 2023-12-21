@@ -27,7 +27,7 @@ const ClassicFooter = (props: Props) => {
             </p>
 
             <Link
-              className="flex flex-row gap-3  items-center hover:text-[#26CCAF]"
+              className="flex flex-row gap-3  items-center hover:text-purple-500"
               href="tel:555-555-5555"
             >
               <FaPhone />
@@ -35,7 +35,7 @@ const ClassicFooter = (props: Props) => {
             </Link>
             <Link
               href="shop@iftheshoefits.com"
-              className="hover:text-[#26CCAF] flex flex-row gap-3 items-center"
+              className="hover:text-purple-500 flex flex-row gap-3 items-center"
             >
               <FaEnvelope />
               shop@iftheshoefits.com
@@ -75,7 +75,7 @@ const ClassicFooter = (props: Props) => {
           </div>
           <div className="grid grid-cols-1 gap-y-8 sm:grid-cols-2 w-full">
             <div className="w-full">
-              <h3 className="font-semibold text-lg mb-2 text-purple-500">
+              <h3 className="font-semibold text-lg mb-2 text-purple-500 underline underline-offset-8">
                 Links
               </h3>
               <ul className="flex flex-col justify-between">
@@ -91,7 +91,7 @@ const ClassicFooter = (props: Props) => {
               </ul>
             </div>
             <div className="w-full">
-              <h3 className="font-semibold text-lg mb-2 text-purple-500">
+              <h3 className="font-semibold text-lg mb-2 text-purple-500 underline underline-offset-8">
                 Customer Service
               </h3>
               <ul>
@@ -115,12 +115,12 @@ const ClassicFooter = (props: Props) => {
             Reserved.
           </p>
           <p className=" flex flex-row  items-center justify-center gap-1 text-center text-xs">
-            Made with <FaHeart /> by:{" "}
+            Made with <FaHeart className="text-red-500"/> by:{" "}
             <Link
               href="https://www.natashajohnson.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline py-2 hover:text-[#1A8B90]"
+              className="underline py-2 hover:text-purple-500"
             >
               Natasha Johnson
             </Link>

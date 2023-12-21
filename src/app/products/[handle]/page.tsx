@@ -3,6 +3,7 @@ import { admin, storefront } from "../../../../lib/shopify";
 import ProductCard from "@/components/ProductCard";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
+import { Metadata } from "next";
 
 type Props = {};
 
@@ -13,7 +14,13 @@ type ImageVariant = {
   images: string[];
 };
 
-export const revalidate = 15;
+export const revalidate = 60;
+
+export const generateMetadata = ({params}: { params: { handle: string } }): Metadata =>  {
+    return {
+        title: `${params.handle}`,
+    }
+}
 
 const ProductPage = async ({ params }: { params: { handle: string } }) => {
   if (!params.handle) return;
