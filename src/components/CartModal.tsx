@@ -108,10 +108,10 @@ const CartModal = ({ cart }: CartModalProps) => {
         }`}
       >
         <div className="flex justify-between items-center">
-          <h2>My Cart</h2>
+          <h2 className="text-2xl pointer font-medium">My Cart</h2>
           <GrClose
             onClick={() => setToggleCart(false)}
-            className="text-xl pointer"
+            className="text-2xl pointer font-medium"
           />
         </div>
 
@@ -172,7 +172,7 @@ const CartModal = ({ cart }: CartModalProps) => {
 
           <Link
             href={String(checkoutUrl)}
-            className="rounded-lg py-3 px-2 border mt-4 block text-center bg-black text-white"
+            className="rounded-lg py-3 px-2 border mt-4 block text-center bg-purple-500 hover:bg-purple-700 text-white"
           >
             Proceed to Checkout
           </Link>
