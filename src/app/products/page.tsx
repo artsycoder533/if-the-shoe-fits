@@ -2,7 +2,7 @@ import ProductsList from "@/components/ProductsList";
 import { storefront } from "../../../lib/shopify";
 import { Suspense } from "react";
 
-export const revalidate = 15;
+export const revalidate = 60;
 
 export default async function Products() {
   const gql = String.raw;
@@ -57,7 +57,7 @@ export default async function Products() {
   });
 
   return (
-    <section className="">
+    <section className="mt-12">
       <Suspense>
         <ProductsList products={filteredProducts} />
       </Suspense>

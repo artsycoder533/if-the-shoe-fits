@@ -235,14 +235,14 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
 
 
   return (
-    <div>
+    <section className="mt-16">
       <BreadCrumbs title={product?.title} />
       <ProductCard
         product={product}
         addToCart={handleAddToCart}
         // additionalData={addt}
       />
-    </div>
+    </section>
   );
 };
 

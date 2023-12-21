@@ -24,7 +24,7 @@ const Header = async (props: Props) => {
   const { name } = shop;
 
   return (
-    <header className="py-4 bg-black flex items-center justify-center relative">
+    <header className="py-4 bg-black flex items-center justify-center fixed z-[15] w-full">
       <Navigation name={name} />
       <Cart />
     </header>

@@ -251,7 +251,7 @@ const ProductCard = ({
           className={`px-4 py-3  cursor-pointer my-5 text-white rounded-md text-lg font-medium self-start ${
             activeColor === "" || activeVariantId === "" || !availableForSale
               ? "bg-gray-400 cursor-not-allowed"
-              : "bg-black"
+              : "bg-purple-500 hover:bg-purple-700"
           }`}
           onClick={() => addToCart(quantity, activeVariantId)}
         >

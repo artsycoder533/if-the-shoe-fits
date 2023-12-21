@@ -61,20 +61,20 @@ const Navigation = ({ name }: NavigationProps) => {
 
   return (
     <nav className="flex items-center justify-between md:pr-8 max-w-[1400px] w-[90vw] mx-auto flex-wrap md:flex-nowrap text-white">
-      <h2 className="text-2xl font-bold flex items-center gap-1"><GiConverseShoe/>{name}</h2>
+      <Link href="/" className="text-2xl font-bold flex items-center gap-1"><GiConverseShoe className="text-3xl" />{name}</Link>
 
       <ul
         className={`absolute top-16 left-0 md:static md:top-auto md:z-0 bg-black z-10 flex flex-col justify-center order-last md:order-none w-full md:w-auto md:flex-row gap-3 items-center  transition-all ${
-          toggleNav ? "h-96" : "h-0 hidden md:flex"
+          toggleNav ? "h-screen" : "h-0 hidden md:flex"
         }`}
       >
-        <li className="hover:text-gray-300 hover:underline">
+        <li className="hover:text-gray-300 hover:underline" onClick={() => setToggleNav(false)}>
           <Link href="/">Home</Link>
         </li>
-        <li className="hover:text-gray-300 hover:underline">
+        <li className="hover:text-gray-300 hover:underline" onClick={() => setToggleNav(false)}>
           <Link href="/products">Products</Link>
         </li>
-        <li className="hover:text-gray-300 hover:underline">
+        <li className="hover:text-gray-300 hover:underline" onClick={() => setToggleNav(false)}>
           <Link href="/contact">Contact</Link>
         </li>
       </ul>

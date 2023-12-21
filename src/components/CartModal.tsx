@@ -79,10 +79,6 @@ const CartModal = ({ cart }: CartModalProps) => {
   const { subtotalAmount, totalTaxAmount } = cost || {};
   const { amount, currencyCode } = subtotalAmount || {};
 
-  // console.log("cart ==>", cart);
-
-  console.log("checkoutURL==>", checkoutUrl);
-
   const formatPrice = (amount: string, currencyCode: string) => {
     if (!amount || !currencyCode) return;
     const price = new Intl.NumberFormat(undefined, {

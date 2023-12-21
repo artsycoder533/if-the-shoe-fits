@@ -1,15 +1,17 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
-
-module.exports = {
+const nextConfig = {
   images: {
-    domains: [
-      "cdn.shopify.com",
-      "gid://shopify/MediaImage/",
-      "shopify-shop-assets.storage.googleapis.com",
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.shopify.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'shopify-shop-assets.storage.googleapis.com'
+      }
     ],
   },
-  experimental: {
-    serverActions: true,
-  },
 };
+
+module.exports = nextConfig;
