@@ -16,7 +16,7 @@ const Hero = async ({ title }: Props) => {
         loop
         muted
         preload="auto"
-        className="absolute top-0 left-0 w-full h-full object-cover"
+        className="absolute top-0 left-0 w-full h-full object-cover bg-black"
       >
         <source src={"/videos/hero-vid.mp4"} type="video/mp4" />
         Your browser does not support the video tag.
