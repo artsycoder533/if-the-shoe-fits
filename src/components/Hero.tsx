@@ -1,7 +1,4 @@
 import Link from "next/link";
-import React, { Suspense } from "react";
-import { FaRegCopy } from "react-icons/fa6";
-import ClickToCopy from "./ClickToCopy";
 
 type Props = {
   title: string;
@@ -24,10 +21,6 @@ const Hero = async ({ title }: Props) => {
         <source src={"/videos/hero-vid.mp4"} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      {/* <p className="absolute top-0 left-0 p-2 bg-white flex flex-wrap items-center gap-1 z-10 w-full text-center">
-        Enter code FKFYB26Q98QR <Suspense><ClickToCopy/></Suspense>at checkout for 15% off your
-        purchase!
-      </p> */}
       {/* Overlay */}
       <div className="absolute top-0 left-0 w-full h-full bg-black opacity-60"></div>
 

@@ -1,13 +1,7 @@
 "use client";
 
 import { formatPrice } from "@/app/utils/helpers";
-import {
-  Product,
-  ShopifyImage,
-  Variants,
-  Edge,
-  Variant,
-} from "@/types/product";
+import { Product, Variant } from "@/types/product";
 import Image from "next/image";
 import { useEffect, useState, useCallback } from "react";
 
@@ -18,11 +12,10 @@ type SelectedOption = {
 
 type VariantNode = {
   selectedOptions: SelectedOption[];
-  // Add other properties as needed
 };
 
 type AdditionalData = {
-  variant: ImageVariant,
+  variant: ImageVariant;
 };
 
 type ImageVariant = {
@@ -30,51 +23,25 @@ type ImageVariant = {
   images: string[];
 };
 
-// export type Variant = {
-//   id: string;
-//   title: string;
-//   price: {
-//     amount: string;
-//     currencyCode: string;
-//     type: [];
-//   };
-//   weight: number;
-//   available: boolean;
-//   image: ShopifyImage;
-//   quantityAvailable: number;
-//   selectedOptions: SelectedOption[];
-//   hasNextPage: true;
-//   hasPreviousPage: true;
-//   availableForSale: boolean;
-//   metafields: Metafield[];
-//   // Add other properties specific to the Variant if needed
-// };
-
 type Metafield = {
   value: string;
 };
 
-// Then, specify the types for your variables
-
 interface ProductCardProps {
   product: Product;
   addToCart: (quanitiy: number, variantID: string) => void;
-  // additionalData: AdditionalData[];
 }
 
 const ProductCard = ({
   product,
   addToCart,
-  // additionalData,
-}: ProductCardProps) => {
+}:
+ProductCardProps) => {
   const [activeVariantId, setActiveVariantId] = useState<string>("");
   const [activeColor, setActiveColor] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
   const [activeVariant, setActiveVariant] = useState<Variant>();
   const [featuredImageDisplay, setFeaturedImageDisplay] = useState<string>();
-  const [additionalImages, setAdditionalImages] = useState<
-    string[] | undefined
-  >([]);
 
   useEffect(() => {
     if (product.variants.edges && product.variants.edges.length > 0) {
@@ -87,24 +54,7 @@ const ProductCard = ({
     }
   }, [product.variants]);
 
-  // const getAdditionalImages = useCallback(() => {
-  //   const result = additionalData
-  //     .filter((data) => data?.variant?.color === activeColor)
-  //     .map((data) => data?.variant?.images)
-  //     .filter((images) => Array.isArray(images))
-  //     .flat(); // Use the flat function to flatten nested arrays
-  //   const updatedImages = result.length > 0 ? result : undefined;
-  //   setAdditionalImages(updatedImages);
-  // }, [additionalData, activeColor]);
-
-  // useEffect(() => {
-  //   if (!additionalData) return;
-  //   console.log('additional data exists')
-  //   getAdditionalImages();
-  // }, [activeColor, additionalData, getAdditionalImages]);
-
   if (!product) return;
-  // if (!additionalData) return;
 
   const {
     id,
@@ -124,12 +74,9 @@ const ProductCard = ({
   const { minVariantPrice } = priceRange;
   const { amount, currencyCode } = minVariantPrice;
 
-  // const imageNodes = images?.edges;
-  const imageNodes = product.images?.edges.map((edge => edge.node))
-  // console.log('imageNodes===>', imageNodes)
+  const imageNodes = product.images?.edges.map((edge) => edge.node);
 
   const variantNodes = product.variants?.edges.map((edge) => edge.node);
-  // console.log('variant-->', variantNodes)
 
   return (
     <div className="flex flex-col lg:flex-row justify-center gap-8 mt-10 max-w-[1400px] w-[90vw] mx-auto">
@@ -140,21 +87,19 @@ const ProductCard = ({
             alt={featuredImageAltText}
             width={500}
             height={500}
-            // sizes="100vw"
             style={{
               maxWidth: "100%",
               height: "auto",
             }}
             className="object-contain"
-            // className="object-cover"
             priority
           />
         </div>
 
-        {imageNodes && imageNodes.length > 0 && <div className="flex flex-row gap-2 h-28 max-w-[500px] mx-auto lg:m-0 w-[90vw] overflow-x-auto">
-       
+        {imageNodes && imageNodes.length > 0 && (
+          <div className="flex flex-row gap-2 h-28 max-w-[500px] mx-auto lg:m-0 w-[90vw] overflow-x-auto">
             {imageNodes?.map((image: any) => {
-              const {altText, id, url} = image;
+              const { altText, id, url } = image;
               return (
                 <Image
                   key={id}
@@ -163,7 +108,6 @@ const ProductCard = ({
                   width={100}
                   height={100}
                   onClick={() => setFeaturedImageDisplay(url)}
-                  // sizes="100vw"
                   style={{
                     maxWidth: "100%",
                     width: "auto",
@@ -173,31 +117,25 @@ const ProductCard = ({
                 />
               );
             })}
-        </div>}
+          </div>
+        )}
       </div>
       <div className="flex flex-col gap-3 basis-1/2  mx-auto">
         <h2 className="text-2xl">{title}</h2>
         <p>{description}</p>
-        {/* tags */}
-        <div className="flex flex-row gap-2">
-          {tags.map((tag) => (
-            <span key={tag} className=" p-2 rounded-full text-center ">
-              {tag}
-            </span>
-          ))}
-        </div>
 
-        <p className="text-2xl">{`${formatPrice(String(activeVariant?.price.amount), currencyCode)}`}</p>
+        <p className="text-2xl my-2">{`${formatPrice(
+          String(activeVariant?.price.amount),
+          currencyCode
+        )}`}</p>
         {/* variants */}
         <h3>
           {variantNodes[0]?.selectedOptions[0]?.name || "N/A"}: {activeColor}
         </h3>
         <div className="flex flex-wrap items-center gap-4 w-80">
           {variantNodes?.map((variant) => {
-            // console.log("variant ==>", variant);
             const {
               selectedOptions,
-              metafields,
               id: variantId,
               quantityAvailable,
               image,
@@ -206,41 +144,29 @@ const ProductCard = ({
             } = variant;
             const { amount } = price;
             const { altText, url, id } = image;
-            // console.log('quanity-->', quantityAvailable)
 
             return (
               <div
-                key={variantId}
+                key={id}
                 className={`flex  w-12 h-12 rounded-md items-center justify-center border  ${
                   activeColor === title
                     ? "outline-black outline-dashed outline-offset-4 outline-2"
                     : ""
-                } ${quantityAvailable > 0 ? "border cursor-pointer" : "bg-gray-200 cursor-not-allowed"}`}
+                } ${
+                  quantityAvailable > 0
+                    ? "border cursor-pointer"
+                    : "bg-gray-200 cursor-not-allowed"
+                }`}
                 onClick={() => {
-                  if(quantityAvailable > 0) {
+                  if (quantityAvailable > 0) {
                     setActiveVariantId(variantId);
                     setActiveColor(title);
                     setFeaturedImageDisplay(url);
                     setActiveVariant(variant);
                   }
-                  
                 }}
               >
-              
-                  {title}
-            
-                {/* <Image
-                  src={url}
-                  alt={altText || activeColor}
-                  width={64}
-                  height={64}
-                  className="object-cover w-full h-full"
-                  // sizes="100vw"
-                  style={{
-                    maxWidth: "100%",
-                    height: "auto",
-                  }}
-                /> */}
+                {title}
               </div>
             );
           })}

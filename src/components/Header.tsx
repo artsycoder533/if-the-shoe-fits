@@ -2,14 +2,10 @@ import React from "react";
 import Navigation from "./Navigation";
 import { storefront } from "../../lib/shopify";
 import Cart from "./Cart";
-import { cookies } from "next/headers";
-import { FaShoppingCart } from "react-icons/fa";
-import CartModal from "./CartModal";
 
-type Props = {};
-const revalidate = 10;
+export const revalidate = 60;
 
-const Header = async (props: Props) => {
+const Header = async () => {
   const gql = String.raw;
 
   const navItemsQuery = gql`

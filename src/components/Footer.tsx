@@ -9,9 +9,7 @@ import {
   FaHeart,
 } from "react-icons/fa";
 
-type Props = {};
-
-const ClassicFooter = (props: Props) => {
+const ClassicFooter = () => {
   const getDate = () => {
     const date = new Date();
     return date.getFullYear();

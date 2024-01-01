@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import Cart from "./Cart";
-import CartModal from "./CartModal";
 import Hamburger from "./Hamburger";
 import { GiConverseShoe } from "react-icons/gi";
 
@@ -79,9 +77,6 @@ const Navigation = ({ name }: NavigationProps) => {
         </li>
       </ul>
       <Hamburger toggleNav={toggleNav} setToggleNav={setToggleNav} />
-      {/* <button className="md:hidden" onClick={() => setToggleNav(!toggleNav)}>
-        X
-      </button> */}
     </nav>
   );
 };

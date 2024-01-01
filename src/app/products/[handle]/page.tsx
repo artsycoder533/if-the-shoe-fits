@@ -1,18 +1,9 @@
 import BreadCrumbs from "@/components/BreadCrumbs";
-import { admin, storefront } from "../../../../lib/shopify";
+import { storefront } from "../../../../lib/shopify";
 import ProductCard from "@/components/ProductCard";
 import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { Metadata } from "next";
-
-type Props = {};
-
-type ImageURL = {};
-
-type ImageVariant = {
-  color: string;
-  images: string[];
-};
 
 export const revalidate = 60;
 
@@ -153,18 +144,6 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
     }
   `;
 
-  const getShopifyMediaUrlQuery = `
-  query GetShopifyMediaUrl($id: ID!){
-    node(id: $id) {
-      ... on MediaImage {
-        originalSource {
-          url
-        }
-        alt
-      }
-    }
-  }
-  `;
 
   const { product } = await storefront(productQuery, { handle });
   if (!product) return;
@@ -191,55 +170,6 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
     revalidatePath(`/products/${handle}`);
   };
 
-  // const fetchImageURLs = async (mediaId: string) => {
-  //   try {
-  //     const response = await admin(getShopifyMediaUrlQuery, { id: mediaId });
-  //     const media = response.node;
-  //     // console.log("reponse ==>", media);
-  //     return media ? media.originalSource.url : undefined;
-  //   } catch (error) {
-  //     console.error("Error fetching image URL:", error);
-  //   }
-  // };
-
-  // get images ids to query for each product variant
-  const variantNodes = product.variants?.edges.map(
-    (edge: { node: any }) => edge.node
-  );
-
-  // const addt = variantNodes?.map(
-  //   (variant: { metafields: any; selectedOptions: any }) => {
-  //     const { metafields, selectedOptions } = variant;
-  //     const key = selectedOptions[0]?.value;
-  //     const value = metafields[0]?.value
-  //       ? JSON.parse(metafields[0]?.value)
-  //       : undefined;
-  //     return {
-  //       variant: {
-  //         color: key,
-  //         images: value,
-  //       },
-  //     };
-  //   }
-  // );
-
-  // const fetchAndReplaceUrls = async () => {
-  //   for (const item of addt) {
-  //     const variant = item.variant;
-  //     const images = variant.images;
-
-  //     if (images && Array.isArray(images)) {
-  //       const urls = await Promise.all(
-  //         images.map((mediaId) => fetchImageURLs(mediaId))
-  //       );
-  //       variant.images = urls;
-  //     }
-  //   }
-  //   // console.log("updated data ==>", addt);
-  // };
-
-  // await fetchAndReplaceUrls();
-
 
   return (
     <section className="my-16">
@@ -247,7 +177,6 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
       <ProductCard
         product={product}
         addToCart={handleAddToCart}
-        // additionalData={addt}
       />
     </section>
   );

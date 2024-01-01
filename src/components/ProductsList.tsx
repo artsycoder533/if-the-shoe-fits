@@ -1,7 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
 import ProductList from "./ProductList";
-import { LuFilter } from "react-icons/lu";
 
 type Product = {
   id: string;
@@ -102,8 +101,6 @@ const ProductsList = ({ products }: ProductListProps) => {
           <option value="z-a">Name: (Z-A)</option>
         </select>
       </form>
-
-      {/* <section className="grid md:grid-cols-2 lg:grid-cols-3 place-items-center mt-12 gap-4 max-w-[1400px] w-[90vw] mx-auto"> */}
       <section className="grid md:grid-cols-2 mt-12 xl:grid-cols-3 gap-8 place-items-center max-w-[1400px] w-[90vw] mx-auto">
         {products && products.length > 0 ? (
           sortedProducts?.map((product: Product) => (

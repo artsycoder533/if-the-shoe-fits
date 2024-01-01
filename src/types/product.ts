@@ -20,7 +20,6 @@ export type Variant = {
   quantityAvailable: number;
   availableForSale: boolean;
   metafields: Metafield[];
-  // Add other properties specific to the Variant if needed
 };
 
 export type Edge<T> = {
@@ -34,16 +33,11 @@ export type Product = {
   handle: string;
   title: string;
   options: [];
-  // images: {
-  //   edges: {
-  //     node: ShopifyImage;
-  //   }[];
-  // }[];
   images: {
     edges: Edge<ShopifyImage>[],
   }
   variants: {
-    edges: Edge<Variant>[]; // Include the 'edges' property
+    edges: Edge<Variant>[];
   };
   featuredImage: FeaturedImage;
   isGiftCard: boolean;
@@ -72,7 +66,6 @@ export type ShopifyImage = {
 };
 
 export type FeaturedImage = {
-  // id: string;
   url: string;
   altText: string;
 };
