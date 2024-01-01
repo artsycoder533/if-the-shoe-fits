@@ -27,7 +27,7 @@ const ClassicFooter = (props: Props) => {
             </p>
 
             <Link
-              className="flex flex-row gap-3  items-center hover:text-purple-500"
+              className="flex flex-row gap-3  items-center hover:text-purple-500 font-extralight"
               href="tel:555-555-5555"
             >
               <FaPhone />
@@ -35,7 +35,7 @@ const ClassicFooter = (props: Props) => {
             </Link>
             <Link
               href="shop@iftheshoefits.com"
-              className="hover:text-purple-500 flex flex-row gap-3 items-center"
+              className="hover:text-purple-500 flex flex-row gap-3 items-center font-extralight"
             >
               <FaEnvelope />
               shop@iftheshoefits.com
@@ -75,10 +75,10 @@ const ClassicFooter = (props: Props) => {
           </div>
           <div className="grid grid-cols-1 gap-y-8 sm:grid-cols-2 w-full">
             <div className="w-full">
-              <h3 className="font-semibold text-lg mb-2 text-purple-500 underline underline-offset-8">
+              <h3 className=" text-lg mb-2 text-purple-500 underline underline-offset-8">
                 Links
               </h3>
-              <ul className="flex flex-col justify-between">
+              <ul className="flex flex-col justify-between font-extralight">
                 <li className="py-2">
                   <Link href="/" className="hover:text-purple-500">Home</Link>
                 </li>
@@ -91,10 +91,10 @@ const ClassicFooter = (props: Props) => {
               </ul>
             </div>
             <div className="w-full">
-              <h3 className="font-semibold text-lg mb-2 text-purple-500 underline underline-offset-8">
+              <h3 className="text-lg mb-2 text-purple-500 underline underline-offset-8">
                 Customer Service
               </h3>
-              <ul>
+              <ul className="font-extralight">
                 <li className="py-2">
                   <Link href="/returns-exchanges" className="hover:text-purple-500">Returns/Exchanges</Link>
                 </li>
