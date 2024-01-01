@@ -68,13 +68,13 @@ const Navigation = ({ name }: NavigationProps) => {
           toggleNav ? "h-[50vh]" : "h-0 hidden md:flex"
         }`}
       >
-        <li className="hover:text-purple-500 hover:underline" onClick={() => setToggleNav(false)}>
+        <li className="hover:text-purple-500 hover:underline underline-offset-8" onClick={() => setToggleNav(false)}>
           <Link href="/">Home</Link>
         </li>
-        <li className="hover:text-purple-500 hover:underline" onClick={() => setToggleNav(false)}>
+        <li className="hover:text-purple-500 hover:underline underline-offset-8" onClick={() => setToggleNav(false)}>
           <Link href="/products">Products</Link>
         </li>
-        <li className="hover:text-purple-500 hover:underline" onClick={() => setToggleNav(false)}>
+        <li className="hover:text-purple-500 hover:underline underline-offset-8" onClick={() => setToggleNav(false)}>
           <Link href="/contact">Contact</Link>
         </li>
       </ul>
