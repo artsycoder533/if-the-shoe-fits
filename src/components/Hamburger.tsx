@@ -9,7 +9,7 @@ type Props = {
 const Hamburger = ({ toggleNav, setToggleNav }: Props) => {
   return (
     <button
-      className="w-11 h-11 flex flex-col items-center justify-center relative md:hidden ml-1"
+      className="w-11 h-11 flex flex-col items-center justify-center relative md:hidden ml-2"
       onClick={() => setToggleNav(!toggleNav)}
     >
       <span

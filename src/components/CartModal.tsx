@@ -92,7 +92,7 @@ const CartModal = ({ cart }: CartModalProps) => {
   return (
     <>
       <button
-        className="flex flex-row absolute p-2 right-20 md:right-8 lg:right-10"
+        className="flex flex-row absolute p-2 right-24 md:right-4 lg:right-10"
         onClick={() => setToggleCart(true)}
       >
         <FaShoppingCart className="text-white text-2xl" />
