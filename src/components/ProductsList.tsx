@@ -103,7 +103,8 @@ const ProductsList = ({ products }: ProductListProps) => {
         </select>
       </form>
 
-      <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center mt-2 gap-6 max-w-[1400px] w-[90vw] mx-auto">
+      {/* <section className="grid md:grid-cols-2 lg:grid-cols-3 place-items-center mt-12 gap-4 max-w-[1400px] w-[90vw] mx-auto"> */}
+      <section className="grid md:grid-cols-2 mt-12 xl:grid-cols-3 gap-8 place-items-center max-w-[1400px] w-[90vw] mx-auto">
         {products && products.length > 0 ? (
           sortedProducts?.map((product: Product) => (
             <ProductList key={product.handle} product={product} />

@@ -242,7 +242,7 @@ const ProductPage = async ({ params }: { params: { handle: string } }) => {
 
 
   return (
-    <section className="mt-16">
+    <section className="my-16">
       <BreadCrumbs title={product?.title} />
       <ProductCard
         product={product}

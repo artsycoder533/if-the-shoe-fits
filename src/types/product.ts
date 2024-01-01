@@ -51,6 +51,7 @@ export type Product = {
   priceRange: {
     minVariantPrice: {
       amount: string;
+      currencyCode: string;
     };
   };
 };

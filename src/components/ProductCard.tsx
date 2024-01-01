@@ -1,5 +1,6 @@
 "use client";
 
+import { formatPrice } from "@/app/utils/helpers";
 import {
   Product,
   ShopifyImage,
@@ -115,13 +116,13 @@ const ProductCard = ({
     featuredImage,
     isGiftCard,
     tags,
-    // priceRange,
+    priceRange,
     availableForSale,
   } = product;
   const { url: featuredImageURL, altText: featuredImageAltText } =
     featuredImage || {};
-  // const { minVariantPrice } = priceRange;
-  // const { amount } = minVariantPrice;
+  const { minVariantPrice } = priceRange;
+  const { amount, currencyCode } = minVariantPrice;
 
   // const imageNodes = images?.edges;
   const imageNodes = product.images?.edges.map((edge => edge.node))
@@ -186,7 +187,7 @@ const ProductCard = ({
           ))}
         </div>
 
-        <p className="text-2xl">{`$${activeVariant?.price.amount}`}</p>
+        <p className="text-2xl">{`${formatPrice(String(activeVariant?.price.amount), currencyCode)}`}</p>
         {/* variants */}
         <h3>
           {variantNodes[0]?.selectedOptions[0]?.name || "N/A"}: {activeColor}

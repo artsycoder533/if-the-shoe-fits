@@ -59,9 +59,9 @@ const ProductList = ({ product }: ProductListProps): JSX.Element | null => {
   if (!images[0]) return null;
 
   return (
-    <div className="w-[250px] flex flex-col">
+    <div className="max-w-[450px] flex flex-col">
       <div
-        className="w-[250px] h-[250px] flex "
+        className="max-w-[450px] h-[450] flex "
         onClick={() => router.push(`/products/${handle}`)}
       >
         <Image
@@ -70,8 +70,8 @@ const ProductList = ({ product }: ProductListProps): JSX.Element | null => {
           priority
           src={url}
           alt={altText || title}
-          width={250}
-          height={250}
+          width={450}
+          height={450}
         />
       </div>
       <div className="h-24 py-2 text-left">
