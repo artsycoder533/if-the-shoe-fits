@@ -169,3 +169,51 @@ export const addItemToCartMutation = gql`
     }
   }
 `;
+
+export const getCartQuery = gql`
+  query FetchCart($id: ID!) {
+    cart(id: $id) {
+      checkoutUrl
+      cost {
+        subtotalAmount {
+          amount
+          currencyCode
+        }
+        totalTaxAmount {
+          amount
+          currencyCode
+        }
+      }
+      totalQuantity
+      id
+      lines(first: 10) {
+        edges {
+          node {
+            merchandise {
+              ... on ProductVariant {
+                id
+                price {
+                  amount
+                  currencyCode
+                }
+                selectedOptions {
+                  name
+                  value
+                }
+                title
+                image {
+                  url
+                  altText
+                }
+                product {
+                  title
+                }
+              }
+            }
+            quantity
+          }
+        }
+      }
+    }
+  }
+`;
