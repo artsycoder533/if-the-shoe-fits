@@ -7,8 +7,11 @@ import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "If The Shoe Fits",
-  description: "An e-commerce store where shoe enthusiasts can shop for one of a kind sneakers and boots. Built with a custom front-end, products are queried from Shopify using Graphql.",
+  title: {
+    default: 'If The Shoe Fits',
+    template: '%s | If The Shoe Fits',
+  },
+  description: 'A hip sneaker boutique nestled in the heart of the Mall of America.',
   metadataBase: new URL('https://www.iftheshoefits.vercel.app'),
   openGraph: {
     images: '/opengraph-image.png',

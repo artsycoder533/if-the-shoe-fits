@@ -2,8 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'If The Shoe Fits | Privacy Policy',
-  description: 'A hip sneaker boutique nestled in the heart of the Mall of America.'
+  title: 'Privacy Policy',
 }
 
 const PrivacyPolicy = () => {

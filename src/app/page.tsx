@@ -3,8 +3,7 @@ import { storefront } from "../../lib/shopify";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'If The Shoe Fits | Home',
-  description: 'A hip sneaker boutique nestled in the heart of the Mall of America.'
+  title: 'Home',
 }
 
 export default async function Home() {

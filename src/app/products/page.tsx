@@ -4,8 +4,7 @@ import { Suspense } from "react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'If The Shoe Fits | Products',
-  description: 'A hip sneaker boutique nestled in the heart of the Mall of America.'
+  title: 'Products',
 }
 
 export const revalidate = 60;
