@@ -7,3 +7,17 @@ export const formatPrice = (amount: string, currencyCode: string) => {
   }).format(parseFloat(amount));
   return price;
 };
+
+export const getFilteredProducts = (products: { edges: { node: any; }[]; }) => {
+  const filteredProducts = products.edges.map((edge: { node: any }) => {
+    const node = edge.node;
+    return {
+      ...node,
+      images: node.images.edges.map(
+        (imageEdge: { node: any }) => imageEdge.node
+      ),
+    };
+  });
+  return filteredProducts;
+}
+
