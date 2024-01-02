@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@formspree/react": "^2.5.1",
     "@shopify/shopify-api": "^7.5.0",
     "@types/node": "^20",
     "@types/react": "^18",
