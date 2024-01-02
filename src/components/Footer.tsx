@@ -32,7 +32,7 @@ const ClassicFooter = () => {
               555-555-5555
             </Link>
             <Link
-              href="shop@iftheshoefits.com"
+              href="mailto:shop@iftheshoefits.com"
               className="hover:text-purple-500 flex flex-row gap-3 items-center font-extralight"
             >
               <FaEnvelope />
