@@ -81,7 +81,7 @@ ProductCardProps) => {
   return (
     <div className="flex flex-col lg:flex-row justify-center gap-8 mt-10 max-w-[1400px] w-[90vw] mx-auto">
       <div className="flex flex-col gap-2 basis-1/2">
-        <div className="flex max-w-[500px] h-[500px] justify-start mx-auto lg:mx-0">
+        <div className="flex max-w-[500px] h-[500px] justify-start mx-auto lg:mx-0 rounded-lg">
           <Image
             src={featuredImageDisplay || featuredImageURL}
             alt={featuredImageAltText}
@@ -91,13 +91,13 @@ ProductCardProps) => {
               maxWidth: "100%",
               height: "auto",
             }}
-            className="object-contain"
+            className="object-contain rounded-lg"
             priority
           />
         </div>
 
         {imageNodes && imageNodes.length > 0 && (
-          <div className="flex flex-row gap-2 h-28 max-w-[500px] mx-auto lg:m-0 w-[90vw] overflow-x-auto">
+          <div className="flex flex-row gap-2 h-28 max-w-[500px] mx-auto lg:m-0 w-[90vw] overflow-x-auto cursor-pointer rounded-lg">
             {imageNodes?.map((image: any) => {
               const { altText, id, url } = image;
               return (
@@ -113,7 +113,7 @@ ProductCardProps) => {
                     width: "auto",
                     height: "auto",
                   }}
-                  className="object-fit pointer"
+                  className="object-fit pointer rounded-lg"
                 />
               );
             })}
@@ -147,7 +147,7 @@ ProductCardProps) => {
 
             return (
               <div
-                key={id}
+                key={variantId}
                 className={`flex  w-12 h-12 rounded-md items-center justify-center border  ${
                   activeColor === title
                     ? "outline-black outline-dashed outline-offset-4 outline-2"
