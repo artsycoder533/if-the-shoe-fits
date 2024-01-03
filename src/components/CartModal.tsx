@@ -71,8 +71,8 @@ const CartModal = ({ cart }: CartModalProps) => {
 
   if (!cart)
     return (
-      <button>
-        <FaShoppingCart />
+      <button className="flex flex-row absolute p-2 right-24 md:right-4 lg:right-10">
+        <FaShoppingCart className="text-white text-2xl"/>
       </button>
     );
   const { id, checkoutUrl, lines, totalQuantity, cost } = cart || {};
@@ -108,7 +108,7 @@ const CartModal = ({ cart }: CartModalProps) => {
         }`}
       >
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl pointer font-medium">My Cart</h2>
+          <h2 className="text-2xl pointer font-light">My Cart</h2>
           <GrClose
             onClick={() => setToggleCart(false)}
             className="text-2xl pointer font-medium"
@@ -130,6 +130,7 @@ const CartModal = ({ cart }: CartModalProps) => {
               const { title: productTitle } = product || {};
               const { amount } = price || {};
               const { url, altText } = image || {};
+              const {name, value} = selectedOptions[0];
               return (
                 <div key={merchandiseId} className="border-b flex py-2 gap-2">
                   {url ? (
@@ -138,12 +139,13 @@ const CartModal = ({ cart }: CartModalProps) => {
                       src={url}
                       width={75}
                       height={75}
+                      className="rounded-lg"
                     />
                   ) : null}
                   <div className="w-full flex flex-col justify-between">
                     <p className="text-sm">{productTitle}</p>
                     <p className="text-sm">
-                      {variantTitle} x {quantity}
+                      {`${name}: ${value} x ${quantity}`}
                     </p>
                     <p className="self-end font-semibold">
                       {`${formatPrice(String(amount), currencyCode)}`}
@@ -154,15 +156,15 @@ const CartModal = ({ cart }: CartModalProps) => {
             })}
         </div>
         <div>
-          <div className="flex justify-between items-cente">
+          <div className="flex justify-between items-center font-light">
             <p>Taxes</p>
             <p>Calculated at checkout</p>
           </div>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center font-light">
             <p>Shipping</p>
             <p>Calculated at Checkout</p>
           </div>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center font-semibold">
             <p>Total</p>
             <p>{`${formatPrice(
               String(amount),
