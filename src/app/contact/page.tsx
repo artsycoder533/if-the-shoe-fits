@@ -1,12 +1,6 @@
 import { Metadata } from "next";
 import Form from "@/components/Form";
 
-interface FormData {
-  name: string;
-  email: string;
-  message: string;
-}
-
 export const metadata: Metadata = {
   title: "Contact",
 };
