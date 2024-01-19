@@ -92,10 +92,10 @@ const CartModal = ({ cart }: CartModalProps) => {
   return (
     <>
       <button
-        className="flex flex-row absolute p-2 right-24 md:right-4 lg:right-10"
+        className="flex flex-row absolute p-2 right-24 md:right-4 lg:right-10 group"
         onClick={() => setToggleCart(true)}
       >
-        <FaShoppingCart className="text-white text-2xl" />
+        <FaShoppingCart className="text-white text-2xl group-hover:text-purple-500" />
         {totalQuantity && totalQuantity > 0 ? (
           <span className="absolute top-0 -right-3 -mt-1 bg-purple-500 text-white rounded-full h-6 w-6 flex items-center justify-center">
             {totalQuantity}

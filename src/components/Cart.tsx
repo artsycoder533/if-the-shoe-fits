@@ -12,8 +12,8 @@ const Cart = async () => {
   let cart;
   if (!id)
     return (
-      <button className="flex flex-row absolute p-2 right-24 md:right-8 lg:right-10">
-        <FaShoppingCart className="text-white text-2xl" />
+      <button className="flex flex-row absolute p-2 right-20 md:right-8 lg:right-10 2xl:right-16 hover:text-purple-500 group">
+        <FaShoppingCart className="text-white text-2xl group-hover:text-purple-500" />
       </button>
     );
   if (id) {
