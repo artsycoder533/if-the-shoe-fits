@@ -3,7 +3,7 @@
 import { formatPrice } from "@/app/utils/helpers";
 import { Product, Variant } from "@/types/product";
 import Image from "next/image";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 
 type SelectedOption = {
   name: string;
@@ -57,15 +57,15 @@ ProductCardProps) => {
   if (!product) return;
 
   const {
-    id,
+    // id,
     title,
-    images,
-    variants,
-    handle,
+    // images,
+    // variants,
+    // handle,
     description,
     featuredImage,
-    isGiftCard,
-    tags,
+    // isGiftCard,
+    // tags,
     priceRange,
     availableForSale,
   } = product;
@@ -80,8 +80,8 @@ ProductCardProps) => {
 
   return (
     <div className="flex flex-col lg:flex-row justify-center gap-8 mt-10 max-w-[1400px] w-[90vw] mx-auto">
-      <div className="flex flex-col gap-2 basis-1/2">
-        <div className="flex max-w-[500px] h-[500px] justify-start mx-auto lg:mx-0 rounded-lg">
+      <div className="flex flex-col w-[90vw] gap-2 basis-1/2">
+        <div className="flex max-w-[500px] h-[400px] w-[90vw] justify-start mx-auto lg:mx-0 rounded-lg">
           <Image
             src={featuredImageDisplay || featuredImageURL}
             alt={featuredImageAltText}
@@ -91,13 +91,13 @@ ProductCardProps) => {
               maxWidth: "100%",
               height: "auto",
             }}
-            className="object-contain rounded-lg"
+            className="object-cover rounded-lg"
             priority
           />
         </div>
 
         {imageNodes && imageNodes.length > 0 && (
-          <div className="flex flex-row gap-2 h-28 max-w-[500px] mx-auto lg:m-0 w-[90vw] overflow-x-auto cursor-pointer rounded-lg">
+          <div className="flex flex-row gap-2 h-28 max-w-[500px] w-[90vw] mx-auto lg:m-0 overflow-x-auto cursor-pointer rounded-lg">
             {imageNodes?.map((image: any) => {
               const { altText, id, url } = image;
               return (
@@ -132,7 +132,7 @@ ProductCardProps) => {
         <h3>
           {variantNodes[0]?.selectedOptions[0]?.name || "N/A"}: {activeColor}
         </h3>
-        <div className="flex flex-wrap items-center gap-4 w-80">
+        <div className="flex flex-wrap items-center gap-4 md:w-80">
           {variantNodes?.map((variant) => {
             const {
               selectedOptions,
@@ -142,13 +142,13 @@ ProductCardProps) => {
               title,
               price,
             } = variant;
-            const { amount } = price;
+            const { amount } = price;           
             const { altText, url, id } = image;
 
             return (
-              <div
+              <button
                 key={variantId}
-                className={`flex  w-12 h-12 rounded-md items-center justify-center border  ${
+                className={`flex  w-12 h-12 rounded-md items-center justify-center border hover:outline-dashed outline-offset-4 outline-2 ${
                   activeColor === title
                     ? "outline-black outline-dashed outline-offset-4 outline-2"
                     : ""
@@ -167,7 +167,7 @@ ProductCardProps) => {
                 }}
               >
                 {title}
-              </div>
+              </button>
             );
           })}
         </div>
