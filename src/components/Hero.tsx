@@ -26,8 +26,8 @@ const Hero = async ({ title }: Props) => {
       {/* Overlay */}
       <div className="absolute top-0 left-0 w-full h-full bg-black opacity-60"></div>
 
-      <div className="z-10 text-white flex flex-col max-w-[1400px] w-[90vw] mx-auto">
-        <h1 className="text-5xl md:text-7xl lg:text-9xl font-bold flex flex-col gap-1">
+      <div className="z-10 text-white flex flex-col max-w-[1400px] w-[90vw] mx-auto ">
+        <h1 className="text-5xl md:text-7xl 2xl:text-8xl font-bold flex flex-col gap-1">
           <span className="inline-block first-letter:text-purple-700">Make</span>
           <span className="inline-block">every</span>
           <span className="inline-block">step</span>
