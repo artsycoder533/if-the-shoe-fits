@@ -5,7 +5,6 @@
 - [Overview](#overview)
     - [Links](#links)
     - [Built With](#built-with)
-
 - [Author](#author)
 
 ## Overview
@@ -26,3 +25,6 @@ A custom Shopify E-commerce storefront where shoe enthusiasts can shop for one o
 - Tailwind
 - Formspree
 
+## Author
+
+- [Personal Portfolio for Natasha](https://natashajohnson.dev/)
