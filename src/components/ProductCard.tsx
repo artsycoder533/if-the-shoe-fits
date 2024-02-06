@@ -4,29 +4,6 @@ import { formatPrice } from "@/app/utils/helpers";
 import { Product, Variant } from "@/types/product";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
-type SelectedOption = {
-  name: string;
-  value: string;
-};
-
-type VariantNode = {
-  selectedOptions: SelectedOption[];
-};
-
-type AdditionalData = {
-  variant: ImageVariant;
-};
-
-type ImageVariant = {
-  color: string;
-  images: string[];
-};
-
-type Metafield = {
-  value: string;
-};
-
 interface ProductCardProps {
   product: Product;
   addToCart: (quanitiy: number, variantID: string) => void;
@@ -57,22 +34,16 @@ ProductCardProps) => {
   if (!product) return;
 
   const {
-    // id,
     title,
-    // images,
-    // variants,
-    // handle,
     description,
     featuredImage,
-    // isGiftCard,
-    // tags,
     priceRange,
     availableForSale,
   } = product;
   const { url: featuredImageURL, altText: featuredImageAltText } =
     featuredImage || {};
   const { minVariantPrice } = priceRange;
-  const { amount, currencyCode } = minVariantPrice;
+  const { currencyCode } = minVariantPrice;
 
   const imageNodes = product.images?.edges.map((edge) => edge.node);
 
@@ -135,15 +106,12 @@ ProductCardProps) => {
         <div className="flex flex-wrap items-center gap-4 md:w-80">
           {variantNodes?.map((variant) => {
             const {
-              selectedOptions,
               id: variantId,
               quantityAvailable,
               image,
               title,
-              price,
-            } = variant;
-            const { amount } = price;           
-            const { altText, url, id } = image;
+            } = variant;          
+            const { url } = image;
 
             return (
               <button
