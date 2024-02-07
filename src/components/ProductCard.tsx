@@ -79,11 +79,6 @@ ProductCardProps) => {
                   width={100}
                   height={100}
                   onClick={() => setFeaturedImageDisplay(url)}
-                  // style={{
-                  //   maxWidth: "100%",
-                  //   width: "auto",
-                  //   height: "auto",
-                  // }}
                   className="object-cover object-center pointer rounded-lg"
                 />
               );
