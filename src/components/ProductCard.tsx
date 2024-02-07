@@ -1,7 +1,7 @@
 "use client";
 
 import { formatPrice } from "@/app/utils/helpers";
-import { Product, Variant } from "@/types/product";
+import { Product, ShopifyImage, Variant } from "@/types/product";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 interface ProductCardProps {
@@ -69,7 +69,7 @@ ProductCardProps) => {
 
         {imageNodes && imageNodes.length > 0 && (
           <div className="flex flex-row gap-2 h-28 max-w-[500px] w-[90vw] mx-auto lg:m-0 overflow-x-auto cursor-pointer rounded-lg">
-            {imageNodes?.map((image: any) => {
+            {imageNodes?.map((image: ShopifyImage) => {
               const { altText, id, url } = image;
               return (
                 <Image
@@ -79,12 +79,12 @@ ProductCardProps) => {
                   width={100}
                   height={100}
                   onClick={() => setFeaturedImageDisplay(url)}
-                  style={{
-                    maxWidth: "100%",
-                    width: "auto",
-                    height: "auto",
-                  }}
-                  className="object-fit pointer rounded-lg"
+                  // style={{
+                  //   maxWidth: "100%",
+                  //   width: "auto",
+                  //   height: "auto",
+                  // }}
+                  className="object-cover object-center pointer rounded-lg"
                 />
               );
             })}
